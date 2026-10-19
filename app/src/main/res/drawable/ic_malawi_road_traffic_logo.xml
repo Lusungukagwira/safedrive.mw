@@ -1,0 +1,80 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="196dp"
+    android:height="196dp"
+    android:viewportWidth="200"
+    android:viewportHeight="220">
+
+    <!-- Outer Shield Border (Orange/Gold) -->
+    <path
+        android:fillColor="#E65100"
+        android:pathData="M10,20 Q100,5 190,20 L190,120 Q190,195 100,215 Q10,195 10,120 Z" />
+
+    <!-- Inner Blue Shield Body -->
+    <path
+        android:fillColor="#0B25B7"
+        android:pathData="M16,25 Q100,12 184,25 L184,118 Q184,188 100,207 Q16,188 16,118 Z" />
+
+    <!-- Top Ribbon Banner (MALAWI) -->
+    <!-- Ribbon Ends -->
+    <path
+        android:fillColor="#D84315"
+        android:pathData="M22,46 L35,32 L35,58 Z M178,46 L165,32 L165,58 Z" />
+    <!-- Main Top Banner -->
+    <path
+        android:fillColor="#F57C00"
+        android:pathData="M30,55 Q100,25 170,55 L165,30 Q100,5 35,30 Z" />
+    <path
+        android:fillColor="#0B25B7"
+        android:pathData="M35,35 Q100,12 165,35 L162,38 Q100,16 38,38 Z" />
+
+    <!-- Center White Triangle -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#E65100"
+        android:strokeWidth="4"
+        android:pathData="M100,55 L148,135 L52,135 Z" />
+
+    <!-- Sun Rays inside Triangle -->
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M100,80 L96,68 L100,66 L104,68 Z M88,88 L78,82 L80,78 L88,84 Z M112,88 L122,82 L120,78 L112,84 Z" />
+
+    <!-- Eagle Crest inside Triangle -->
+    <path
+        android:fillColor="#0B25B7"
+        android:pathData="M100,82 C92,82 86,92 88,102 C90,110 96,112 100,112 C104,112 110,110 112,102 C114,92 108,82 100,82 Z M100,86 C103,86 106,90 105,96 L95,96 C94,90 97,86 100,86 Z" />
+    <!-- Wing left -->
+    <path
+        android:fillColor="#0B25B7"
+        android:pathData="M88,90 Q78,92 76,104 Q84,106 90,98 Z" />
+    <!-- Wing right -->
+    <path
+        android:fillColor="#0B25B7"
+        android:pathData="M112,90 Q122,92 124,104 Q116,106 110,98 Z" />
+
+    <!-- Water Waves inside Triangle Base -->
+    <path
+        android:fillColor="#0B25B7"
+        android:pathData="M65,124 Q72,121 80,124 Q88,127 95,124 Q102,121 110,124 Q118,127 125,124 Q132,121 135,124 L135,127 Q128,124 121,127 Q113,130 105,127 Q98,124 90,127 Q83,130 75,127 Q68,124 65,127 Z" />
+    <path
+        android:fillColor="#0B25B7"
+        android:pathData="M68,129 Q74,127 80,129 Q87,131 94,129 Q101,127 108,129 Q115,131 122,129 Q128,127 132,129 L132,131 Q126,129 120,131 Q113,133 106,131 Q99,129 92,131 Q85,133 78,131 Q72,129 68,131 Z" />
+
+    <!-- Bottom Center Tab (AND) -->
+    <path
+        android:fillColor="#F57C00"
+        android:strokeColor="#D84315"
+        android:strokeWidth="1.5"
+        android:pathData="M82,160 L118,160 L124,188 L76,188 Z" />
+
+    <!-- Left Curved Ribbon (ROAD TRAFFIC) -->
+    <path
+        android:fillColor="#F57C00"
+        android:pathData="M24,95 C28,155 60,192 84,182 L80,165 C62,172 40,140 38,98 Z" />
+
+    <!-- Right Curved Ribbon (SAFETY SERVICES) -->
+    <path
+        android:fillColor="#F57C00"
+        android:pathData="M176,95 C172,155 140,192 116,182 L120,165 C138,172 160,140 162,98 Z" />
+
+</vector>

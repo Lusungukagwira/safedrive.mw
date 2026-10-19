@@ -1,5 +1,6 @@
 package com.example.safedrivemw.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,23 +14,37 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.safedrivemw.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     onLogin: (email: String) -> Unit = {},
-    onLoggedIn: () -> Unit = {}
+    onLoggedIn: () -> Unit = {},
+    onNavigateToRegister: () -> Unit = {}
 ) {
     var email by remember { mutableStateOf("chisomo.banda@safedrive.mw") }
     var password by remember { mutableStateOf("Driver@2026") }
     var passwordVisible by remember { mutableStateOf(false) }
-    var isSignIn by remember { mutableStateOf(true) }
+
+    val blackTextFieldColors = OutlinedTextFieldDefaults.colors(
+        focusedTextColor = Color.Black,
+        unfocusedTextColor = Color.Black,
+        focusedLabelColor = Color.Black,
+        unfocusedLabelColor = Color.Black,
+        focusedLeadingIconColor = Color.Black,
+        unfocusedLeadingIconColor = Color.Black,
+        focusedTrailingIconColor = Color.Black,
+        unfocusedTrailingIconColor = Color.Black,
+        focusedPlaceholderColor = Color.Black,
+        unfocusedPlaceholderColor = Color.Black
+    )
 
     Scaffold(
         containerColor = Color(0xFFF8FAFC)
@@ -52,18 +67,19 @@ fun LoginScreen(
                         modifier = Modifier.padding(20.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Box(
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_malawi_road_traffic_logo),
+                            contentDescription = "Malawi Road Traffic Logo",
                             modifier = Modifier
-                                .size(48.dp)
-                                .background(Color.White.copy(alpha = 0.2f), CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(Icons.Default.DirectionsCar, contentDescription = null, tint = Color.White)
-                        }
+                                .size(56.dp)
+                                .background(Color.White, CircleShape)
+                                .padding(2.dp)
+                        )
                         Spacer(modifier = Modifier.width(16.dp))
                         Column {
                             Text("SafeDrive.mw", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                            Text("Your Licence Journey, Simplified", color = Color.White.copy(alpha = 0.8f), fontSize = 13.sp)
+                            Text("Directorate of Road Traffic & Safety Services", color = Color.White.copy(alpha = 0.9f), fontSize = 11.sp, fontWeight = FontWeight.Medium)
+                            Text("Learn. Drive. Licence. Own the Road", color = Color.White.copy(alpha = 0.75f), fontSize = 10.sp)
                         }
                     }
                 }
@@ -73,7 +89,7 @@ fun LoginScreen(
             item {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text("Welcome back", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                    Text("Sign in to track your licence application", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                    Text("Sign in to track your licence application", style = MaterialTheme.typography.bodyMedium, color = Color.Black)
                 }
                 Spacer(modifier = Modifier.height(20.dp))
             }
@@ -86,8 +102,8 @@ fun LoginScreen(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    TabButton(title = "Sign In", selected = isSignIn, modifier = Modifier.weight(1f)) { isSignIn = true }
-                    TabButton(title = "Register", selected = !isSignIn, modifier = Modifier.weight(1f)) { isSignIn = false }
+                    TabButton(title = "Sign In", selected = true, modifier = Modifier.weight(1f)) { }
+                    TabButton(title = "Register", selected = false, modifier = Modifier.weight(1f)) { onNavigateToRegister() }
                 }
                 Spacer(modifier = Modifier.height(20.dp))
             }
@@ -97,7 +113,8 @@ fun LoginScreen(
                     value = email,
                     onValueChange = { email = it },
                     label = { Text("Email address") },
-                    leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
+                    leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = Color.Black) },
+                    colors = blackTextFieldColors,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true
@@ -110,15 +127,17 @@ fun LoginScreen(
                     value = password,
                     onValueChange = { password = it },
                     label = { Text("Password") },
-                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color.Black) },
                     trailingIcon = {
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
                                 imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                contentDescription = null
+                                contentDescription = null,
+                                tint = Color.Black
                             )
                         }
                     },
+                    colors = blackTextFieldColors,
                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
@@ -146,7 +165,7 @@ fun LoginScreen(
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B))
                 ) {
-                    Text(if (isSignIn) "Sign In" else "Register", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text("Sign In", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -169,7 +188,7 @@ fun LoginScreen(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("Email  $email", style = MaterialTheme.typography.bodySmall, color = Color.DarkGray)
+                            Text("Email  $email", style = MaterialTheme.typography.bodySmall, color = Color.Black)
                             IconButton(onClick = {}, modifier = Modifier.size(24.dp)) {
                                 Icon(Icons.Default.ContentCopy, contentDescription = "Copy", tint = Color.Gray, modifier = Modifier.size(14.dp))
                             }
@@ -179,7 +198,7 @@ fun LoginScreen(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("Password  $password", style = MaterialTheme.typography.bodySmall, color = Color.DarkGray)
+                            Text("Password  $password", style = MaterialTheme.typography.bodySmall, color = Color.Black)
                             IconButton(onClick = {}, modifier = Modifier.size(24.dp)) {
                                 Icon(Icons.Default.ContentCopy, contentDescription = "Copy", tint = Color.Gray, modifier = Modifier.size(14.dp))
                             }
@@ -209,7 +228,7 @@ fun TabButton(
             Text(
                 text = title,
                 fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
-                color = if (selected) Color(0xFF1A3A6B) else Color.Gray,
+                color = if (selected) Color(0xFF1A3A6B) else Color.Black,
                 fontSize = 14.sp
             )
         }
