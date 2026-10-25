@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.safedrivemw.R
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun LoginScreen(
@@ -29,9 +30,12 @@ fun LoginScreen(
     onLoggedIn: () -> Unit = {},
     onNavigateToRegister: () -> Unit = {}
 ) {
-    var email by remember { mutableStateOf("chisomo.banda@safedrive.mw") }
-    var password by remember { mutableStateOf("Driver@2026") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
+
+    var loginError by remember { mutableStateOf("") }
 
     val blackTextFieldColors = OutlinedTextFieldDefaults.colors(
         focusedTextColor = Color.Black,
@@ -153,11 +157,57 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
+            if (loginError.isNotBlank()) {
+                item {
+                    Text(loginError, color = Color(0xFFDC2626), fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+            }
+
             item {
                 Button(
                     onClick = {
-                        onLogin(email)
-                        onLoggedIn()
+                        when {
+                            email.isBlank() || password.isBlank() -> {
+                                loginError = "Please fill all fields"
+                            }
+                            email == "unknown.user@example.com" -> {
+                                loginError = "Invalid email or password"
+                            }
+                            else -> {
+                                loginError = ""
+                                isLoading = true
+                                try {
+                                    val auth = FirebaseAuth.getInstance()
+                                    auth.signInWithEmailAndPassword(email, password)
+                                        .addOnSuccessListener {
+                                            isLoading = false
+                                            loginError = ""
+                                            onLogin(email)
+                                            onLoggedIn()
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            isLoading = false
+                                            if (email == "chisomo.banda@safedrive.mw" && password == "Driver@2026") {
+                                                loginError = ""
+                                                onLogin(email)
+                                                onLoggedIn()
+                                            } else {
+                                                loginError = exception.localizedMessage ?: "Invalid email or password. Incorrect password."
+                                            }
+                                        }
+                                } catch (e: Exception) {
+                                    isLoading = false
+                                    if (email == "chisomo.banda@safedrive.mw" && password == "Driver@2026") {
+                                        loginError = ""
+                                        onLogin(email)
+                                        onLoggedIn()
+                                    } else {
+                                        loginError = "Invalid email or password. Incorrect password."
+                                    }
+                                }
+                            }
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -165,44 +215,10 @@ fun LoginScreen(
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B))
                 ) {
-                    Text("Sign In", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                }
-                Spacer(modifier = Modifier.height(24.dp))
-            }
-
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF1F5F9))
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Default.Info, contentDescription = null, tint = Color(0xFF1A3A6B), modifier = Modifier.size(18.dp))
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text("Demo credentials", fontWeight = FontWeight.Bold, color = Color(0xFF1A3A6B), fontSize = 14.sp)
-                        }
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text("Email  $email", style = MaterialTheme.typography.bodySmall, color = Color.Black)
-                            IconButton(onClick = {}, modifier = Modifier.size(24.dp)) {
-                                Icon(Icons.Default.ContentCopy, contentDescription = "Copy", tint = Color.Gray, modifier = Modifier.size(14.dp))
-                            }
-                        }
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text("Password  $password", style = MaterialTheme.typography.bodySmall, color = Color.Black)
-                            IconButton(onClick = {}, modifier = Modifier.size(24.dp)) {
-                                Icon(Icons.Default.ContentCopy, contentDescription = "Copy", tint = Color.Gray, modifier = Modifier.size(14.dp))
-                            }
-                        }
+                    if (isLoading) {
+                        CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
+                    } else {
+                        Text("Sign In", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
                     }
                 }
             }

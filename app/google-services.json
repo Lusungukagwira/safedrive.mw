@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "519714193403",
+    "project_id": "safedrivemw",
+    "storage_bucket": "safedrivemw.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519714193403:android:97c1c8f0ea00a328d5d55e",
+        "android_client_info": {
+          "package_name": "com.example.safedrivemw"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd4vg_-4IN2tM5ecH3OzwEw5Za6K3uo_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

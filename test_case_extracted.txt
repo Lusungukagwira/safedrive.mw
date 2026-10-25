@@ -1,0 +1,1744 @@
+TEST CASE TEMPLATE
+Mobile Applications Development Project
+4th Year – Test Design Submission
+2. Project Information
+Student Name
+Lusungu Kagwira
+Student ID
+BSC-COM-31-22
+Application Name
+SafeDrive.mw
+Target Platform
+Android 14
+Date
+23/10/26
+Template Version
+v1.0
+TEST CASES
+Write your test cases in this section
+Copy the table below for each test case you write and number your test cases in order (Test Case 1, Test Case 2, …).
+Test Case 1: Successful Registration
+Test Case ID
+SD_REG_001
+Description
+Verify that a new user can create an account with valid details.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; the email used is not yet registered.
+Test Data
+Full Name: Chisomo Banda; Email: chisomo.banda@example.com; Phone: +265 987491375; Password: Driver@2026; Confirm Password: Driver@2026
+Test Steps
+1. Launch the application.
+2. Tap “New Applicant”.
+3. Tap “Create Account”.
+4. Enter the full name, email, phone number, password and confirm password.
+5. Tap the “Register” button.
+Expected Result
+Message “Registration successful. Please log in.” is shown; user is taken to the Login screen.
+Post-conditions
+The account is stored in the central database; no session is created until the user logs in.
+Status
+Test Case 2: Registration with Existing Email
+Test Case ID
+SD_REG_002
+Description
+Verify that registration is blocked when the email is already registered.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; an account already exists for chikondi.banda@example.com.
+Test Data
+Full Name: Test User; Email: chikondi.banda@example.com; Phone: +265 888 765 432; Password: SafeDrive@2026; Confirm Password: SafeDrive@2026
+Test Steps
+1. Launch the application.
+2. Tap “New Applicant”.
+3. Tap “Create Account”.
+4. Enter the details using the already registered email.
+5. Tap the “Register” button.
+Expected Result
+Error message “This email is already registered” is shown; user remains on the Registration screen.
+Post-conditions
+No duplicate account is created.
+Status
+Test Case 3: Registration with Empty Fields
+Test Case ID
+SD_REG_003
+Description
+Verify that registration is blocked when all fields are left empty.
+Test Type
+Negative
+Priority
+Medium
+Prerequisites
+App installed.
+Test Data
+Full Name, Email, Phone, Password, Confirm Password: (all empty)
+Test Steps
+1. Launch the application.
+2. Tap “New Applicant”.
+3. Tap “Create Account”.
+4. Leave all fields empty.
+5. Tap the “Register” button.
+Expected Result
+Error message “Please fill all fields” is shown; user remains on the Registration screen.
+Post-conditions
+No registration request is sent; no account is created.
+Status
+Test Case 4: Registration with Invalid Email Format
+Test Case ID
+SD_REG_004
+Description
+Verify that registration is blocked when the email format is invalid.
+Test Type
+Negative
+Priority
+Medium
+Prerequisites
+App installed.
+Test Data
+Full Name: Chisomo Banda; Email: chisomo.banda.example.com; Phone: +265 999 123 456; Password: Driver@2026; Confirm Password: Driver@2026
+Test Steps
+1. Launch the application.
+2. Tap “New Applicant”.
+3. Tap “Create Account”.
+4. Enter all details with the invalid email (no “@” symbol).
+5. Tap the “Register” button.
+Expected Result
+Error message “Please enter a valid email address” is shown; user remains on the Registration screen.
+Post-conditions
+No account is created.
+Status
+Test Case 5: Registration with Mismatched Passwords
+Test Case ID
+SD_REG_005
+Description
+Verify that registration is blocked when the password and confirm password do not match.
+Test Type
+Negative
+Priority
+Medium
+Prerequisites
+App installed; the email used is not yet registered.
+Test Data
+Full Name: Chisomo Banda; Email: chisomo.banda@example.com; Phone: +265 987491375; Password: Driver@2026; Confirm Password: Driver@2025
+Test Steps
+1. Launch the application.
+2. Tap “New Applicant”.
+3. Tap “Create Account”.
+4. Enter all details with a different value in Confirm Password.
+5. Tap the “Register” button.
+Expected Result
+Error message “Passwords do not match” is shown; user remains on the Registration screen.
+Post-conditions
+No account is created.
+Status
+Test Case 6: Password Below Minimum Length
+Test Case ID
+SD_REG_006
+Description
+Verify that registration is blocked when the password is one character shorter than the minimum length of 8 characters.
+Test Type
+Boundary
+Priority
+Medium
+Prerequisites
+App installed; the email used is not yet registered.
+Test Data
+Email: chisomo.banda@example.com; Password: Safe@12 (7 characters); Confirm Password: Safe@12
+Test Steps
+1. Launch the application.
+2. Tap “New Applicant”.
+3. Tap “Create Account”.
+4. Enter valid details but use the 7-character password in both password fields.
+5. Tap the “Register” button.
+Expected Result
+Error message “Password must be at least 8 characters” is shown; user remains on the Registration screen.
+Post-conditions
+No account is created.
+Status
+Test Case 7: Password at Minimum Length
+Test Case ID
+SD_REG_007
+Description
+Verify that registration is accepted when the password is exactly the minimum length of 8 characters.
+Test Type
+Boundary
+Priority
+Medium
+Prerequisites
+App installed; the email used is not yet registered.
+Test Data
+Email: chisomo.banda@example.com; Password: Safe@123 (8 characters); Confirm Password: Safe@123
+Test Steps
+1. Launch the application.
+2. Tap “New Applicant”.
+3. Tap “Create Account”.
+4. Enter valid details but use the 8-character password in both password fields.
+5. Tap the “Register” button.
+Expected Result
+Message “Registration successful. Please log in.” is shown; user is taken to the Login screen.
+Post-conditions
+The account is created.
+Status
+Test Case 8: Successful Login
+Test Case ID
+SD_LOGIN_001
+Description
+Verify that a registered user can log in with a valid email and password.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; user account already registered.
+Test Data
+Email: chisomo.banda@example.com; Password: SafeDrive@2026
+Test Steps
+1. Launch the application.
+2. Enter the registered email and correct password.
+3. Tap the “Login” button.
+Expected Result
+User is taken to the Home screen and the applicant-type options (New Applicant / Renew License) are available.
+Post-conditions
+A user session is created and the user remains logged in.
+Status
+Test Case 9: Login with Incorrect Password
+Test Case ID
+SD_LOGIN_002
+Description
+Verify that login fails when a registered email is entered with an incorrect password.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; user account already registered.
+Test Data
+Email: chisomo.banda@example.com; Password: WrongPass1
+Test Steps
+1. Launch the application.
+2. Enter the registered email and an incorrect password.
+3. Tap the “Login” button.
+Expected Result
+Error message “Invalid email or password” is shown; user remains on the Login screen.
+Post-conditions
+No session is created; the password field is cleared.
+Status
+Test Case 10: Login with Unregistered Email
+Test Case ID
+SD_LOGIN_003
+Description
+Verify that login fails when an email that is not registered is entered.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; the email used is not registered in the system.
+Test Data
+Email: unknown.user@example.com; Password: SafeDrive@2026
+Test Steps
+1. Launch the application.
+2. Enter an unregistered email and any password.
+3. Tap the “Login” button.
+Expected Result
+Error message “Invalid email or password” is shown; user remains on the Login screen.
+Post-conditions
+No session is created.
+Status
+Test Case 11: Login with Empty Fields
+Test Case ID
+SD_LOGIN_004
+Description
+Verify that login is blocked when both the email and password fields are empty.
+Test Type
+Negative
+Priority
+Medium
+Prerequisites
+App installed.
+Test Data
+Email: (empty); Password: (empty)
+Test Steps
+1. Launch the application.
+2. Leave both fields empty.
+3. Tap the “Login” button.
+Expected Result
+Error message “Please fill all fields” is shown; user remains on the Login screen.
+Post-conditions
+No login request is sent; no session is created.
+Status
+Test Case 12: Successful Logout
+Test Case ID
+SD_LOGIN_005
+Description
+Verify that a logged-in user can log out of the application.
+Test Type
+Positive
+Priority
+Medium
+Prerequisites
+App installed; internet connection available; applicant is registered and logged in as a New Applicant.
+Test Data
+None
+Test Steps
+1. Open the menu or Profile screen.
+2. Tap “Logout”.
+3. Confirm the logout if prompted.
+Expected Result
+User is taken to the Login screen.
+Post-conditions
+The user session is cleared.
+Status
+Test Case 13: Access After Logout
+Test Case ID
+SD_LOGIN_006
+Description
+Verify that protected screens cannot be accessed by pressing the Back button after logout.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+User has just logged out of the application.
+Test Data
+None
+Test Steps
+1. Log in and then log out of the application.
+2. Press the device Back button.
+Expected Result
+No application or personal data is displayed; user remains on, or is returned to, the Login screen.
+Post-conditions
+No session exists; the user must log in again to access any data.
+Status
+Test Case 14: Select New Applicant
+Test Case ID
+SD_TYPE_001
+Description
+Verify that a user who selects New Applicant is taken to the new licence application flow.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; user is logged in.
+Test Data
+Applicant type: New Applicant
+Test Steps
+1. From the Home screen, tap “New Applicant”.
+Expected Result
+The Licence Category selection screen for new applicants is displayed.
+Post-conditions
+The user is registered in the system as a new applicant for this application.
+Status
+Test Case 15: Select Renew License
+Test Case ID
+SD_TYPE_002
+Description
+Verify that an existing driver who selects Renew License is taken to the renewal flow.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; existing driver is registered and logged in.
+Test Data
+Applicant type: Existing Driver / Renew License
+Test Steps
+1. From the Home screen, tap “Renew License”.
+Expected Result
+The licence renewal form screen is displayed.
+Post-conditions
+The user remains logged in; no application is created until the form is submitted.
+Status
+Test Case 16: Continue Without Selecting Applicant Type
+Test Case ID
+SD_TYPE_003
+Description
+Verify that the user cannot proceed when no applicant type has been selected.
+Test Type
+Negative
+Priority
+Low
+Prerequisites
+App installed; user is logged in 
+and on the applicant
+-type screen.
+Test Data
+Applicant type: (none selected)
+Test Steps
+1. Open the applicant-type screen.
+2. Tap “Continue” without selecting New Applicant or Renew License.
+Expected Result
+Error message “Please select an applicant type” is shown; user remains on the applicant-type screen.
+Post-conditions
+No application is started.
+Status
+Test Case 17: View Requirements for Selected Category
+Test Case ID
+SD_APP_001
+Description
+Verify that the requirements and required documents for the selected licence category are displayed.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is registered and logged in as a New Applicant.
+Test Data
+Licence category: Light Motor Vehicle (Car)
+Test Steps
+1. Tap “New Applicant”.
+2. Select the licence category “Light Motor Vehicle (Car)”.
+3. Tap “Next”.
+Expected Result
+A Requirements screen is displayed listing the requirements and the documents needed for the selected category.
+Post-conditions
+The selected category is saved to the draft application.
+Status
+Test Case 18: Different Requirements per Category
+Test Case ID
+SD_APP_002
+Description
+Verify that the requirements shown change according to the licence category selected.
+Test Type
+Positive
+Priority
+Medium
+Prerequisites
+App installed; internet connection available; applicant is registered and logged in as a New Applicant.
+Test Data
+Categories: Motorcycle, then Light Motor Vehicle (Car)
+Test Steps
+1. Tap “New Applicant”.
+2. Select the category “Motorcycle” and tap “Next”.
+3. Note the requirements shown.
+4. Go back and select the category “Light Motor Vehicle (Car)”.
+5. Tap “Next” and compare the requirements shown.
+Expected Result
+Each category displays its own requirements and document list; the lists correspond to the selected category.
+Post-conditions
+No application is submitted.
+Status
+Test Case 19: Proceed Without Selecting a Category
+Test Case ID
+SD_APP_003
+Description
+Verify that the user cannot continue when no licence category has been selected.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is registered and logged in as a New Applicant.
+Test Data
+Licence category: (none selected)
+Test Steps
+1. Tap “New Applicant”.
+2. Leave the licence category unselected.
+3. Tap “Next”.
+Expected Result
+Error message “Please select a licence category” is shown; user remains on the Licence Category screen.
+Post-conditions
+No application is created.
+Status
+Test Case 20: Submit a Complete Licence Application
+Test Case ID
+SD_APP_004
+Description
+Verify that a new applicant can submit a complete licence application with all required documents.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in and has chosen a licence category and completed the driving-school step; all required documents are available on the device.
+Test Data
+Category: Light Motor Vehicle (Car); Full Name: 
+Chikondi
+ Banda; Date of Birth: 14/05/2000; Phone: +265 999 123 456; Documents: valid files for every item on the requirements list (PDF/JPG, under 5 MB each)
+Test Steps
+1. Open the licence application form.
+2. Fill in all required fields.
+3. Upload every required document.
+4. Review the details.
+5. Tap “Submit Application”.
+6. Pay the application fee on the Payment screen using mobile money (Airtel Money: 0999 123 456).
+Expected Result
+After successful payment, a success message is shown; the application status is displayed as “Submitted”.
+Post-conditions
+The application and payment record are saved in the central database and the application is forwarded for RTD review.
+Status
+Test Case 21: Submit Application with Empty Required Fields
+Test Case ID
+SD_APP_005
+Description
+Verify that the application cannot be submitted when required form fields are empty.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; applicant is logged in and on the licence application form.
+Test Data
+All required form fields: (empty)
+Test Steps
+1. Open the licence application form.
+2. Leave the required fields empty.
+3. Tap “Submit Application”.
+Expected Result
+Error message “Please fill all required fields” is shown; the empty fields are highlighted; user remains on the form.
+Post-conditions
+No application is submitted.
+Status
+Test Case 22: Submit Application Without Internet
+Test Case ID
+SD_APP_006
+Description
+Verify that submission fails gracefully and entered data is kept when there is no internet connection.
+Test Type
+Negative
+Priority
+Medium
+Prerequisites
+Applicant is logged in; application form completely filled and documents uploaded; device internet connection then switched off.
+Test Data
+Complete application data (as in SD_APP_004)
+Test Steps
+1. Switch off mobile data and Wi-Fi.
+2. Tap “Submit Application”.
+Expected Result
+Error message “No internet connection. Please try again.” is shown; the entered information is not lost.
+Post-conditions
+The application is not submitted; the user can retry after reconnecting.
+Status
+Test Case 23: Driving School Question Displayed
+Test Case ID
+SD_SCHOOL_001
+Description
+Verify that a new applicant is asked whether they already have a driving school after viewing the requirements.
+Test Type
+Positive
+Priority
+Medium
+Prerequisites
+App installed; internet connection available; applicant is registered and logged in as a New Applicant. Requirements screen has been viewed.
+Test Data
+Licence category: Light Motor Vehicle (Car)
+Test Steps
+1. Select a licence category and tap “Next” to view the requirements.
+2. Tap “Continue”.
+Expected Result
+A screen asks whether the applicant has a driving school, with the options “I already have a driving school” and “Find a driving school”.
+Post-conditions
+No selection is saved yet.
+Status
+Test Case 24: Continue Using Own Driving School
+Test Case ID
+SD_SCHOOL_002
+Description
+Verify that the driving-school feature is optional and the applicant can continue without selecting a school.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is registered and logged in as a New Applicant. The driving-school question screen is displayed.
+Test Data
+Option: “I already have a driving school”
+Test Steps
+1. Tap “I already have a driving school”.
+Expected Result
+The user proceeds directly to the licence application form without being required to choose a school.
+Post-conditions
+No driving-school request is created.
+Status
+Test Case 25: View Registered Driving Schools
+Test Case ID
+SD_SCHOOL_003
+Description
+Verify that registered driving schools are listed with their key information.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is registered and logged in as a New Applicant. At least three registered driving schools exist in the system.
+Test Data
+Option: “Find a driving school”
+Test Steps
+1. On the driving-school question screen, tap “Find a driving school”.
+2. Scroll through the list of schools.
+Expected Result
+A list of registered schools is displayed showing each school’s name, location, licence categories offered, training price and contact details.
+Post-conditions
+No data is changed.
+Status
+Test Case 26: Compare Driving Schools
+Test Case ID
+SD_SCHOOL_004
+Description
+Verify that two selected driving schools can be compared by price, location and licence categories.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is registered and logged in as a New Applicant. The driving-school list is displayed with at least two schools.
+Test Data
+Any two schools from the list
+Test Steps
+1. Select the first school using the compare option.
+2. Select the second school using the compare option.
+3. Tap “Compare”.
+Expected Result
+A comparison screen shows both schools side by side with their prices, locations and available licence categories.
+Post-conditions
+No data is changed; the user can return to the list.
+Status
+Test Case 27: Compare with Only One School Selected
+Test Case ID
+SD_SCHOOL_005
+Description
+Verify that comparison is not possible when only one school is selected.
+Test Type
+Boundary
+Priority
+Medium
+Prerequisites
+App installed; internet connection available; applicant is registered and logged in as a New Applicant. The driving-school list is displayed.
+Test Data
+One school selected
+Test Steps
+1. Select only one school using the compare option.
+2. Tap “Compare”.
+Expected Result
+Error message “Please select at least two schools to compare” is shown; user remains on the school list.
+Post-conditions
+No comparison is generated.
+Status
+Test Case 28: Submit Request to a Driving School
+Test Case ID
+SD_SCHOOL_006
+Description
+Verify that an applicant can select a preferred driving school and submit a request to it.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is registered and logged in as a New Applicant. The driving-school list is displayed.
+Test Data
+Selected school: any registered school offering the chosen licence category
+Test Steps
+1. Tap the preferred school in the list.
+2. Tap “Request Enrolment”.
+3. Confirm the request.
+Expected Result
+A confirmation message such as “Request sent to [school name]” is shown; the user then continues to the licence application form.
+Post-conditions
+The request is saved and sent to the selected driving school.
+Status
+Test Case 29: Submit Request Without Selecting a School
+Test Case ID
+SD_SCHOOL_007
+Description
+Verify that a driving-school request cannot be submitted when no school has been selected.
+Test Type
+Negative
+Priority
+Medium
+Prerequisites
+App installed; internet connection available; applicant is registered and logged in as a New Applicant. The driving-school list is displayed.
+Test Data
+No school selected
+Test Steps
+1. Open the driving-school list.
+2. Tap “Request Enrolment” without selecting a school.
+Expected Result
+Error message “Please select a driving school” is shown; user remains on the school list.
+Post-conditions
+No request is sent.
+Status
+Test Case 30: Driving School Feature Not Offered to Renewals
+Test Case ID
+SD_SCHOOL_008
+Description
+Verify that an existing driver renewing a licence is not asked to choose a driving school.
+Test Type
+Negative
+Priority
+Low
+Prerequisites
+App installed; internet connection available; existing driver is registered and logged in.
+Test Data
+Applicant type: Existing Driver / Renew License
+Test Steps
+1. Tap “Renew License”.
+2. Complete the first steps of the renewal flow.
+Expected Result
+No driving-school question or driving-school list is shown; the renewal flow goes directly to the renewal form and document upload.
+Post-conditions
+No driving-school request is created.
+Status
+Test Case 31: Open Renewal Form
+Test Case ID
+SD_RENEW_001
+Description
+Verify that an existing driver can open the licence renewal form.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; existing driver is registered and logged in.
+Test Data
+None
+Test Steps
+1. From the Home screen, tap “Renew License”.
+Expected Result
+The renewal form is displayed with its required fields and document upload section.
+Post-conditions
+No application is created yet.
+Status
+Test Case 32: Submit Renewal Application
+Test Case ID
+SD_RENEW_002
+Description
+Verify that an existing driver can submit a complete renewal application with all required documents.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; existing driver is registered and logged in. Required renewal documents are available on the device.
+Test Data
+Licence Number: MW-123456; Full Name: 
+Chikondi
+ Banda; Documents: valid files for every required item (PDF/JPG, under 5 MB each)
+Test Steps
+1. Tap “Renew License”.
+2. Fill in all required renewal fields.
+3. Upload every required document.
+4. Tap “Submit Renewal”.
+5. Pay the renewal fee on the Payment screen using mobile money (Airtel Money: 0999 123 456).
+Expected Result
+After successful payment, a success message is shown; the renewal status is displayed as “Submitted”.
+Post-conditions
+The renewal application and payment record are saved and the renewal is forwarded for RTD review.
+Status
+Test Case 33: Submit Renewal with Empty Fields
+Test Case ID
+SD_RENEW_003
+Description
+Verify that the renewal cannot be submitted when required fields are empty.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; internet connection available; existing driver is registered and logged in.
+Test Data
+All required renewal fields: (empty)
+Test Steps
+1. Tap “Renew License”.
+2. Leave the required fields empty.
+3. Tap “Submit Renewal”.
+Expected Result
+Error message “Please fill all required fields” is shown; empty fields are highlighted; user remains on the renewal form.
+Post-conditions
+No renewal application is submitted.
+Status
+Test Case 34: Submit Renewal Without Required Documents
+Test Case ID
+SD_RENEW_004
+Description
+Verify that the renewal cannot be submitted when a required document has not been uploaded.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; internet connection available; existing driver is registered and logged in.
+Test Data
+Licence Number: MW-123456; Documents: none uploaded
+Test Steps
+1. Tap “Renew License”.
+2. Fill in all required renewal fields.
+3. Do not upload any document.
+4. Tap “Submit Renewal”.
+Expected Result
+Error message “Please upload all required documents” is shown; user remains on the renewal form.
+Post-conditions
+No renewal application is submitted; the entered form data is retained.
+Status
+Test Case 35: Upload a Valid Document
+Test Case ID
+SD_DOC_001
+Description
+Verify that an applicant can upload a document in a supported format within the size limit.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+Applicant is logged in and on the document upload section; a file national_id.jpg (1 MB) is on the device.
+Test Data
+File: national_id.jpg (JPG, 1 MB)
+Test Steps
+1. Tap “Upload” next to the first required document.
+2. Select national_id.jpg from the device.
+Expected Result
+The file name is shown next to the document and marked as uploaded.
+Post-conditions
+The file is attached to the draft application.
+Status
+Test Case 36: Upload Unsupported File Type
+Test Case ID
+SD_DOC_002
+Description
+Verify that a file in an unsupported format is rejected.
+Test Type
+Negative
+Priority
+Medium
+Prerequisites
+Applicant is logged in and on the document upload section; a file video.mp4 is on the device.
+Test Data
+File: video.mp4
+Test Steps
+1. Tap “Upload” next to a required document.
+2. Select video.mp4 from the device.
+Expected Result
+Error message “Unsupported file type. Upload a PDF, JPG or PNG file” is shown; the file is not attached.
+Post-conditions
+The document remains marked as not uploaded.
+Status
+Test Case 37: Upload File at Maximum Size
+Test Case ID
+SD_DOC_003
+Description
+Verify that a file exactly at the maximum size of 5 MB is accepted.
+Test Type
+Boundary
+Priority
+Medium
+Prerequisites
+Applicant is logged in and on the document upload section; a file of exactly 5 MB is on the device.
+Test Data
+File: licence_form.pdf (PDF, 5.0 MB)
+Test Steps
+1. Tap “Upload” next to a required document.
+2. Select licence_form.pdf from the device.
+Expected Result
+The file is accepted and marked as uploaded.
+Post-conditions
+The file is attached to the draft application.
+Status
+Test Case 38: Upload File Above Maximum Size
+Test Case ID
+SD_DOC_004
+Description
+Verify that a file larger than the 5 MB limit is rejected.
+Test Type
+Boundary
+Priority
+Medium
+Prerequisites
+Applicant is logged in and on the document upload section; a file of 5.1 MB is on the device.
+Test Data
+File: large_scan.pdf (PDF, 5.1 MB)
+Test Steps
+1. Tap “Upload” next to a required document.
+2. Select large_scan.pdf from the device.
+Expected Result
+Error message “File is too large. Maximum size is 5 MB” is shown; the file is not attached.
+Post-conditions
+The document remains marked as not uploaded.
+Status
+Test Case 39: Replace an Uploaded Document
+Test Case ID
+SD_DOC_005
+Description
+Verify that an applicant can replace a previously uploaded document before submission.
+Test Type
+Positive
+Priority
+Medium
+Prerequisites
+Applicant is logged in; one document (national_id.jpg) has already been uploaded; national_id_new.jpg is on the device.
+Test Data
+Old file: national_id.jpg; New file: national_id_new.jpg
+Test Steps
+1. Tap “Replace” (or “Remove”) beside the uploaded document.
+2. Select national_id_new.jpg from the device.
+Expected Result
+The new file name replaces the old one beside the document.
+Post-conditions
+Only the new file is attached to the application.
+Status
+Test Case 40: Upload Interrupted by Lost Connection
+Test Case ID
+SD_DOC_006
+Description
+Verify that a failed upload shows an error and does not lose the other entered information.
+Test Type
+Negative
+Priority
+Medium
+Prerequisites
+Applicant is logged in and on the document upload section; a valid file is on the device.
+Test Data
+File: national_id.jpg (1 MB)
+Test Steps
+1. Tap “Upload” next to a required document and select the file.
+2. Switch off mobile data and Wi-Fi while the upload is in progress.
+Expected Result
+Error message “Upload failed. Check your internet connection and try again” is shown; the document is not marked as uploaded; other entered data remains.
+Post-conditions
+The user can retry the upload after reconnecting.
+Status
+Test Case 41: Missing Document Detected
+Test Case ID
+SD_CHECK_001
+Description
+Verify that the system identifies a missing required document and notifies the applicant.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+Applicant is logged in; the application form is complete but one required document has not been uploaded.
+Test Data
+Missing document: Proof of Residence
+Test Steps
+1. Open the application with the missing document.
+2. Tap “Submit Application”.
+Expected Result
+The system displays a message listing the missing document and a notification is sent to the applicant; the application is not forwarded to RTD.
+Post-conditions
+The application stays incomplete and is not forwarded for review.
+Status
+Test Case 42: Correct and Resubmit Returned Application
+Test Case ID
+SD_CHECK_002
+Description
+Verify that an applicant can correct the missing information on a returned application and resubmit it.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+Applicant is logged in; an application has been returned for correction because a document was missing; the missing document is on the device.
+Test Data
+Document: proof_of_residence.pdf (PDF, 1 MB)
+Test Steps
+1. Open the notification or the returned application.
+2. Upload the missing document.
+3. Tap “Resubmit”.
+Expected Result
+A success message is shown; the application is accepted and its status returns to “Submitted”.
+Post-conditions
+The corrected application is sent to the RTD portal for review.
+Status
+Test Case 43: Resubmit Without Correcting
+Test Case ID
+SD_CHECK_003
+Description
+Verify that a returned application cannot be resubmitted until the missing information is provided.
+Test Type
+Negative
+Priority
+Medium
+Prerequisites
+Applicant is logged in; an application has been returned for correction.
+Test Data
+No correction made
+Test Steps
+1. Open the returned application.
+2. Tap “Resubmit” without uploading the missing document.
+Expected Result
+An error message states that the required correction is still missing; the application is not resubmitted.
+Post-conditions
+The application remains in the “Returned for correction” state.
+Status
+Test Case 44: Payment Summary Displayed
+Test Case ID
+SD_PAY_001
+Description
+Verify that the Payment screen shows the correct fee and the available payment methods before payment.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+Application type: New licence application (fee configured by RTD, e.g. MWK 20,000)
+Test Steps
+1. Tap “Proceed to Payment” on the application summary screen.
+2. Review the Payment screen.
+Expected Result
+The Payment screen shows the application type, the amount payable to the Road Traffic Directorate and the payment options: Airtel Money, TNM 
+Mpamba
+ and Digital Banking.
+Post-conditions
+No payment is made; the application is not yet submitted to RTD.
+Status
+Test Case 45: Pay Application Fee with Airtel Money
+Test Case ID
+SD_PAY_002
+Description
+Verify that an applicant can pay the licence application fee using Airtel Money.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+Airtel Money number: 0999 123 456 (registered, sufficient balance)
+Test Steps
+1. Select “Airtel Money” as the payment method.
+2. Enter the Airtel Money number.
+3. Tap “Pay”.
+4. Approve the payment prompt on the phone by entering the Airtel Money PIN.
+Expected Result
+Message “Payment successful” is shown with a transaction reference number; the application is submitted and its status is “Submitted”.
+Post-conditions
+The payment record is saved against the application; the application is forwarded to the RTD portal.
+Status
+Test Case 46: Pay Application Fee with TNM 
+Mpamba
+Test Case ID
+SD_PAY_003
+Description
+Verify that an applicant can pay the licence application fee using TNM 
+Mpamba
+.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+TNM 
+Mpamba
+ number: 0888 123 456 (registered, sufficient balance)
+Test Steps
+1. Select “TNM 
+Mpamba
+” as the payment method.
+2. Enter the TNM 
+Mpamba
+ number.
+3. Tap “Pay”.
+4. Approve the payment prompt on the phone by entering the 
+Mpamba
+ PIN.
+Expected Result
+Message “Payment successful” is shown with a transaction reference number; the application is submitted and its status is “Submitted”.
+Post-conditions
+The payment record is saved against the application; the application is forwarded to the RTD portal.
+Status
+Test Case 47: Pay Application Fee with Digital Banking
+Test Case ID
+SD_PAY_004
+Description
+Verify that an applicant can pay the licence application fee using a digital banking service.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed. The user has an active digital banking account with sufficient funds.
+Test Data
+Payment method: Digital Banking; Bank: (select a supported bank); Account/card details as required by the bank
+Test Steps
+1. Select “Digital Banking” as the payment method.
+2. Select the bank.
+3. Enter the account details and tap “Pay”.
+4. Complete the bank’s 
+authorisation
+ step (e.g. PIN or OTP).
+Expected Result
+Message “Payment successful” is shown with a transaction reference number; the application is submitted and its status is “Submitted”.
+Post-conditions
+The payment record is saved against the application; the application is forwarded to the RTD portal.
+Status
+Test Case 48: Pay Renewal Fee with Mobile Money
+Test Case ID
+SD_PAY_005
+Description
+Verify that an existing driver can pay the licence renewal fee using mobile money.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+App installed; internet connection available; existing driver is logged in; the renewal form is complete and all required documents are uploaded; the Payment screen is displayed.
+Test Data
+Application type: Licence renewal (fee configured by RTD, e.g. MWK 15,000); Airtel Money number: 0999 123 456 (registered, sufficient balance)
+Test Steps
+1. Select “Airtel Money” as the payment method.
+2. Enter the Airtel Money number.
+3. Tap “Pay”.
+4. Approve the payment prompt on the phone by entering the PIN.
+Expected Result
+Message “Payment successful” is shown with a transaction reference number; the renewal is submitted and its status is “Submitted”.
+Post-conditions
+The payment record is saved against the renewal application; the renewal is forwarded to the RTD portal.
+Status
+Test Case 49: Payment Receipt Displayed
+Test Case ID
+SD_PAY_006
+Description
+Verify that a receipt with payment details is shown after a successful payment.
+Test Type
+Positive
+Priority
+Medium
+Prerequisites
+A payment has just been completed successfully.
+Test Data
+Airtel Money number: 0999 123 456 (registered, sufficient balance)
+Test Steps
+1. Complete a payment using Airtel Money.
+2. Review the confirmation screen.
+Expected Result
+A receipt is displayed showing the transaction reference number, amount paid, payment method, date and time, and the application it relates to; a payment notification is received.
+Post-conditions
+The receipt is stored and can be viewed later.
+Status
+Test Case 50: View Payment History
+Test Case ID
+SD_PAY_007
+Description
+Verify that a user can view the receipt of a previous payment.
+Test Type
+Positive
+Priority
+Low
+Prerequisites
+Applicant is logged in; at least one successful payment exists.
+Test Data
+None
+Test Steps
+1. Open the Profile or Payments screen.
+2. Tap “Payment History”.
+3. Tap a previous payment.
+Expected Result
+The list of previous payments is shown; the selected payment displays its full receipt details.
+Post-conditions
+No data is changed.
+Status
+Test Case 51: Pay Without Selecting a Payment Method
+Test Case ID
+SD_PAY_008
+Description
+Verify that payment cannot proceed when no payment method has been selected.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+Payment method: (none selected)
+Test Steps
+1. Leave all payment methods unselected.
+2. Tap “Pay”.
+Expected Result
+Error message “Please select a payment method” is shown; user remains on the Payment screen.
+Post-conditions
+No payment request is sent; the application is not submitted.
+Status
+Test Case 52: Pay with Empty Mobile Number
+Test Case ID
+SD_PAY_009
+Description
+Verify that mobile money payment is blocked when the mobile number is empty.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+Payment method: Airtel Money; Mobile number: (empty)
+Test Steps
+1. Select “Airtel Money” as the payment method.
+2. Leave the mobile number empty.
+3. Tap “Pay”.
+Expected Result
+Error message “Please enter your mobile money number” is shown; user remains on the Payment screen.
+Post-conditions
+No payment request is sent; the application is not submitted.
+Status
+Test Case 53: Mobile Number Below Required Length
+Test Case ID
+SD_PAY_010
+Description
+Verify that a mobile money number with fewer digits than required is rejected.
+Test Type
+Boundary
+Priority
+Medium
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+Payment method: Airtel Money; Mobile number: 099912345 (9 digits)
+Test Steps
+1. Select “Airtel Money” as the payment method.
+2. Enter the 9-digit mobile number.
+3. Tap “Pay”.
+Expected Result
+Error message “Enter a valid mobile number” is shown; user remains on the Payment screen.
+Post-conditions
+No payment request is sent.
+Status
+Test Case 54: Mobile Number with Letters
+Test Case ID
+SD_PAY_011
+Description
+Verify that a mobile money number containing non-numeric characters is rejected.
+Test Type
+Negative
+Priority
+Medium
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+Payment method: TNM 
+Mpamba
+; Mobile number: 08881AB456
+Test Steps
+1. Select “TNM 
+Mpamba
+” as the payment method.
+2. Enter the mobile number containing letters.
+3. Tap “Pay”.
+Expected Result
+The number is not accepted; error message “Enter a valid mobile number” is shown.
+Post-conditions
+No payment request is sent.
+Status
+Test Case 55: Payment with Insufficient Funds
+Test Case ID
+SD_PAY_012
+Description
+Verify that payment fails when the mobile money account balance is lower than the fee.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed. The mobile money account balance is lower than the fee.
+Test Data
+Payment method: Airtel Money; Mobile number: 0999 000 111 (balance below the fee)
+Test Steps
+1. Select “Airtel Money” as the payment method.
+2. Enter the mobile number.
+3. Tap “Pay”.
+4. Approve the payment prompt on the phone.
+Expected Result
+Error message “Payment failed: insufficient funds” is shown; user remains on the Payment screen with the option to retry.
+Post-conditions
+No money is deducted; the application is not submitted.
+Status
+Test Case 56: Payment Cancelled by User
+Test Case ID
+SD_PAY_013
+Description
+Verify that cancelling the mobile money prompt does not complete the payment.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+Airtel Money number: 0999 123 456 (registered, sufficient balance)
+Test Steps
+1. Select “Airtel Money” as the payment method.
+2. Enter the mobile number and tap “Pay”.
+3. Cancel the payment prompt on the phone.
+Expected Result
+Message “Payment cancelled” is shown; user remains on the Payment screen with the option to retry.
+Post-conditions
+No money is deducted; the application is not submitted.
+Status
+Test Case 57: Payment Prompt Not Approved (Timeout)
+Test Case ID
+SD_PAY_014
+Description
+Verify that the payment is marked as failed when the user does not approve the prompt in time.
+Test Type
+Negative
+Priority
+Medium
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+TNM 
+Mpamba
+ number: 0888 123 456 (registered, sufficient balance)
+Test Steps
+1. Select “TNM 
+Mpamba
+” as the payment method.
+2. Enter the mobile number and tap “Pay”.
+3. Do not respond to the payment prompt on the phone.
+4. Wait until the prompt expires.
+Expected Result
+Message “Payment timed out. Please try again” is shown; user remains on the Payment screen.
+Post-conditions
+No money is deducted; the application is not submitted.
+Status
+Test Case 58: Digital Banking Payment Declined
+Test Case ID
+SD_PAY_015
+Description
+Verify that a digital banking payment is declined when the bank 
+authorization
+ fails.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete;
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+Payment method: Digital Banking; 
+Authorization
+: incorrect OTP
+Test Steps
+1. Select “Digital Banking” as the payment method.
+2. Select the bank and enter the account details.
+3. Tap “Pay”.
+4. Enter an incorrect OTP at the bank 
+authorization
+ step.
+Expected Result
+Error message “Payment declined by your bank” is shown; user remains on the Payment screen with the option to retry.
+Post-conditions
+No money is deducted; the application is not submitted.
+Status
+Test Case 59: Connection Lost During Payment
+Test Case ID
+SD_PAY_016
+Description
+Verify that no duplicate charge occurs and the correct payment status is shown when the internet connection is lost during payment.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+Airtel Money number: 0999 123 456 (registered, sufficient balance)
+Test Steps
+1. Select “Airtel Money” as the payment method.
+2. Enter the mobile number and tap “Pay”.
+3. Switch off mobile data and Wi-Fi while the payment is processing.
+4. Switch the connection back on and reopen the application.
+Expected Result
+The app shows “Payment pending” or the confirmed result of the transaction after verifying with the payment provider; the user is not charged twice.
+Post-conditions
+The payment record reflects the true transaction status; the entered application data is not lost.
+Status
+Test Case 60: Double Tap on Pay Button
+Test Case ID
+SD_PAY_017
+Description
+Verify that tapping “Pay” more than once creates only one payment transaction.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+App installed; internet connection available; applicant is logged in; application form is 
+complete,
+ all documents are uploaded and have passed the missing-information check; the Payment screen is displayed.
+Test Data
+Airtel Money number: 0999 123 456 (registered, sufficient balance)
+Test Steps
+1. Select “Airtel Money” as the payment method.
+2. Enter the mobile number.
+3. Tap “Pay” twice quickly.
+Expected Result
+Only one payment prompt is sent; the Pay button is disabled while the payment is processing.
+Post-conditions
+Only one transaction is recorded and charged.
+Status
+Test Case 61: Retry Payment After Failure
+Test Case ID
+SD_PAY_018
+Description
+Verify that a user can retry and complete the payment after a failed attempt.
+Test Type
+Positive
+Priority
+Medium
+Prerequisites
+Applicant is logged in; a previous payment 
+attempt
+ for the same application failed (e.g. insufficient funds); the mobile money account has now been topped up.
+Test Data
+Airtel Money number: 0999 123 456 (registered, sufficient balance)
+Test Steps
+1. Return to the Payment screen for the same application.
+2. Select “Airtel Money” and enter the mobile number.
+3. Tap “Pay” and approve the prompt on the phone.
+Expected Result
+Message “Payment successful” is shown; the application is submitted; only the successful payment is charged.
+Post-conditions
+The application has one successful payment record; the failed attempt is shown as failed in the history.
+Status
+Test Case 62: Submit Application Without Payment
+Test Case ID
+SD_PAY_019
+Description
+Verify that an application cannot be submitted to RTD until payment has been completed.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+Applicant is logged in; application form is complete and documents are uploaded; no payment has been made.
+Test Data
+None
+Test Steps
+1. Complete the application form and upload all documents.
+2. Attempt to skip the Payment screen (e.g. press Back or reopen the draft application).
+3. Attempt to submit the application.
+Expected Result
+The application cannot be submitted; the user is directed to the Payment screen with a message “Payment is required to submit your application”.
+Post-conditions
+The application stays in draft state and is not forwarded to RTD.
+Status
+Test Case 63: View Current Application Status
+Test Case ID
+SD_TRACK_001
+Description
+Verify that an applicant can view the current status of a submitted application.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+Applicant is logged in; an application has been submitted.
+Test Data
+None
+Test Steps
+1. From the Home screen, tap “Track Application”.
+Expected Result
+The current status (e.g. “Submitted”) is shown together with the status stages: Submitted, Document Verification, Under Review, Approved and License Issued.
+Post-conditions
+No data is changed.
+Status
+Test Case 64: Status Updates After RTD Processing
+Test Case ID
+SD_TRACK_002
+Description
+Verify that the displayed status changes when the RTD officer moves the application to the next stage.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+Applicant is logged in; an application exists with status “Submitted”; the RTD officer has changed it to “Document Verification”.
+Test Data
+None
+Test Steps
+1. Open “Track Application”.
+2. Pull down to refresh the screen.
+Expected Result
+The status is shown as “Document Verification”; the earlier stage is marked as completed.
+Post-conditions
+The application record shows the new status.
+Status
+Test Case 65: Track 
+With
+ No Application
+Test Case ID
+SD_TRACK_003
+Description
+Verify that a user with no submitted application sees an appropriate message.
+Test Type
+Negative
+Priority
+Low
+Prerequisites
+User is logged in; no application has been submitted by this user.
+Test Data
+None
+Test Steps
+1. From the Home screen, tap “Track Application”.
+Expected Result
+Message “No applications yet” is shown; no status details are displayed.
+Post-conditions
+No data is changed.
+Status
+Test Case 66: View Only Own Application
+Test Case ID
+SD_TRACK_004
+Description
+Verify that a user can only see their own application and not another user’s application.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+Two registered users exist; user A has a submitted application; user B has none.
+Test Data
+User B: second@example.com / SafeDrive@2026
+Test Steps
+1. Log in as user B.
+2. Tap “Track Application”.
+Expected Result
+User A’s application details are not displayed; user B sees “No applications yet”.
+Post-conditions
+User B’s session is active; no data of user A is exposed.
+Status
+Test Case 67: Notification on Submission
+Test Case ID
+SD_NOTIF_001
+Description
+Verify that a notification is received when an application is submitted.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+Applicant is logged in; a complete application is ready to submit.
+Test Data
+Complete application data
+Test Steps
+1. Submit the application.
+2. Open the Notifications screen.
+Expected Result
+A notification confirming that the application was submitted appears at the top of the list.
+Post-conditions
+The notification is stored in the notification list.
+Status
+Test Case 68: Notification on Status Change
+Test Case ID
+SD_NOTIF_002
+Description
+Verify that a notification is received when the application status changes.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+Applicant is logged in; an application exists; the RTD officer changes its status to “Under Review”.
+Test Data
+Status change: Document Verification to Under Review
+Test Steps
+1. Wait for the status change on the RTD portal.
+2. Open the Notifications screen.
+Expected Result
+A notification stating that the application is now “Under Review” is displayed.
+Post-conditions
+The notification is stored and the Track Application screen shows “Under Review”.
+Status
+Test Case 69: Notification When Action Is Required
+Test Case ID
+SD_NOTIF_003
+Description
+Verify that a notification is received when the applicant must correct or add information.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+Applicant is logged in; the RTD officer has requested additional information on the application.
+Test Data
+Request: additional document
+Test Steps
+1. Wait for the request on the RTD portal.
+2. Open the Notifications screen.
+Expected Result
+A notification stating that action is required is displayed, describing what must be corrected or provided.
+Post-conditions
+The application is shown as returned for correction.
+Status
+Test Case 70: Notification on Approval
+Test Case ID
+SD_NOTIF_004
+Description
+Verify that a notification is received when the application is approved.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+Applicant is logged in; the RTD officer approves the application.
+Test Data
+Status change: Under Review to Approved
+Test Steps
+1. Wait for the approval on the RTD portal.
+2. Open the Notifications screen.
+Expected Result
+A notification stating that the application has been approved is displayed.
+Post-conditions
+The Track Application screen shows “Approved”.
+Status
+Test Case 71: Notification on Rejection
+Test Case ID
+SD_NOTIF_005
+Description
+Verify that a notification is received when the application is rejected.
+Test Type
+Positive
+Priority
+Medium
+Prerequisites
+Applicant is logged in; the RTD officer rejects the application.
+Test Data
+Status change: Under Review to Rejected
+Test Steps
+1. Wait for the rejection on the RTD portal.
+2. Open the Notifications screen.
+Expected Result
+A notification stating that the application has been rejected is displayed.
+Post-conditions
+The Track Application screen shows the rejected status.
+Status
+Test Case 72: Open Application from Notification
+Test Case ID
+SD_NOTIF_006
+Description
+Verify that tapping a notification opens the related application.
+Test Type
+Positive
+Priority
+Low
+Prerequisites
+Applicant is logged in; at least one notification exists.
+Test Data
+None
+Test Steps
+1. Open the Notifications screen.
+2. Tap a status-change notification.
+Expected Result
+The Track Application screen for the related application is displayed.
+Post-conditions
+The notification is marked as read.
+Status
+Test Case 73: Empty Notification List
+Test Case ID
+SD_NOTIF_007
+Description
+Verify that a new user with no activity sees an appropriate message on the notification screen.
+Test Type
+Negative
+Priority
+Low
+Prerequisites
+User is logged in; no application has been submitted and no event has occurred.
+Test Data
+None
+Test Steps
+1. Open the Notifications screen.
+Expected Result
+Message “No notifications yet” is shown; no notifications are listed.
+Post-conditions
+No data is changed.
+Status
+Test Case 74: View Digital Confirmation After Approval
+Test Case ID
+SD_DIGI_001
+Description
+Verify that an approved applicant can access the digital confirmation or licence information.
+Test Type
+Positive
+Priority
+High
+Prerequisites
+Applicant is logged in; the application has been approved.
+Test Data
+None
+Test Steps
+1. Tap “Track Application”.
+2. Tap “View Digital Confirmation”.
+Expected Result
+The digital confirmation or available licence information (name, licence category and status) is displayed.
+Post-conditions
+No data is changed.
+Status
+Test Case 75: Digital Confirmation Before Approval
+Test Case ID
+SD_DIGI_002
+Description
+Verify that the digital confirmation cannot be accessed while the application is not yet approved.
+Test Type
+Negative
+Priority
+High
+Prerequisites
+Applicant is logged in; the application status is “Under Review”.
+Test Data
+None
+Test Steps
+1. Tap “Track Application”.
+2. Tap “View Digital Confirmation” (or check that the option is disabled).
+Expected Result
+The option is disabled or the message “Available after your application is approved” is shown; no confirmation is displayed.
+Post-conditions
+No data is changed.
+Status
+Test Case 76: Collection Instructions After Licence Issued
+Test Case ID
+SD_DIGI_003
+Description
+Verify that the applicant sees instructions for collecting the physical licence when it has been issued.
+Test Type
+Positive
+Priority
+Medium
+Prerequisites
+Applicant is logged in; the application status is “License Issued”.
+Test Data
+None
+Test Steps
+1. Tap “Track Application”.
+2. Open the application with status “License Issued”.
+Expected Result
+Status “License Issued” is shown together with instructions for collecting the physical licence.
+Post-conditions
+No data is changed.
+Status

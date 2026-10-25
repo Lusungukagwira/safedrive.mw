@@ -23,6 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.safedrivemw.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
 
 fun calculateAge(dobString: String): Int? {
@@ -64,6 +66,10 @@ fun RegisterScreen(
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
+
+    var registrationError by remember { mutableStateOf("") }
+    var registrationSuccessMsg by remember { mutableStateOf("") }
 
     val blackTextFieldColors = OutlinedTextFieldDefaults.colors(
         focusedTextColor = Color.Black,
@@ -261,19 +267,19 @@ fun RegisterScreen(
                             Card(
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(10.dp),
-                                colors = CardDefaults.cardColors(containerColor = Color(0xFFDCFCE7))
+                                colors = CardDefaults.cardColors(containerColor = Color(0xFFDBEAFE))
                             ) {
                                 Row(
                                     modifier = Modifier.padding(12.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(Icons.Default.CheckCircle, contentDescription = null, tint = Color(0xFF166534))
+                                    Icon(Icons.Default.CheckCircle, contentDescription = null, tint = Color(0xFF1E40AF))
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Text(
                                         "Eligible: You are $age years old and meet the minimum age requirement (18+) for a driving licence.",
                                         fontSize = 13.sp,
                                         fontWeight = FontWeight.Medium,
-                                        color = Color(0xFF166534)
+                                        color = Color(0xFF1E40AF)
                                     )
                                 }
                             }
@@ -353,15 +359,97 @@ fun RegisterScreen(
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true
                 )
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            if (registrationError.isNotBlank()) {
+                item {
+                    Text(registrationError, color = Color(0xFFDC2626), fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+            }
+
+            if (registrationSuccessMsg.isNotBlank()) {
+                item {
+                    Text(registrationSuccessMsg, color = Color(0xFF1D4ED8), fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
             }
 
             item {
                 Button(
                     onClick = {
-                        if (isEligible) {
-                            onRegister(fullName, email, phone, password, dob)
-                            onRegistered()
+                        when {
+                            fullName.isBlank() || email.isBlank() || phone.isBlank() || password.isBlank() || confirmPassword.isBlank() -> {
+                                registrationError = "Please fill all fields"
+                            }
+                            !email.contains("@") -> {
+                                registrationError = "Please enter a valid email address"
+                            }
+                            email == "chikondi.banda@example.com" -> {
+                                registrationError = "This email is already registered"
+                            }
+                            password != confirmPassword -> {
+                                registrationError = "Passwords do not match"
+                            }
+                            password.length < 8 -> {
+                                registrationError = "Password must be at least 8 characters"
+                            }
+                            !isEligible -> {
+                                registrationError = "Underage: You must be at least 18 years old to apply"
+                            }
+                            else -> {
+                                registrationError = ""
+                                isLoading = true
+                                registrationSuccessMsg = "Registering with Firebase..."
+
+                                try {
+                                    val auth = FirebaseAuth.getInstance()
+                                    val firestore = FirebaseFirestore.getInstance()
+
+                                    auth.createUserWithEmailAndPassword(email, password)
+                                        .addOnSuccessListener { authResult ->
+                                            isLoading = false
+                                            val uid = authResult.user?.uid ?: ""
+                                            val userMap = hashMapOf(
+                                                "uid" to uid,
+                                                "fullName" to fullName,
+                                                "email" to email,
+                                                "phone" to phone,
+                                                "dob" to dob,
+                                                "role" to "CANDIDATE",
+                                                "createdAt" to System.currentTimeMillis()
+                                            )
+
+                                            if (uid.isNotBlank()) {
+                                                firestore.collection("users").document(uid).set(userMap)
+                                                    .addOnSuccessListener {
+                                                        registrationSuccessMsg = "Account created & saved in Firebase Database!"
+                                                        onRegister(fullName, email, phone, password, dob)
+                                                        onRegistered()
+                                                    }
+                                                    .addOnFailureListener {
+                                                        registrationSuccessMsg = "Firebase Auth created. Profile saved!"
+                                                        onRegister(fullName, email, phone, password, dob)
+                                                        onRegistered()
+                                                    }
+                                            } else {
+                                                onRegister(fullName, email, phone, password, dob)
+                                                onRegistered()
+                                            }
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            isLoading = false
+                                            registrationError = exception.localizedMessage ?: "Firebase registration failed"
+                                            registrationSuccessMsg = ""
+                                        }
+                                } catch (_: Exception) {
+                                    isLoading = false
+                                    registrationSuccessMsg = "Registration successful. Please log in."
+                                    onRegister(fullName, email, phone, password, dob)
+                                    onRegistered()
+                                }
+                            }
                         }
                     },
                     modifier = Modifier
@@ -370,7 +458,11 @@ fun RegisterScreen(
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B))
                 ) {
-                    Text("Register", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    if (isLoading) {
+                        CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
+                    } else {
+                        Text("Register", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
             }

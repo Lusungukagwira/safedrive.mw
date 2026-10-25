@@ -5,10 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.*
-import com.example.safedrivemw.ui.screens.DashboardScreen
-import com.example.safedrivemw.ui.screens.LoginScreen
-import com.example.safedrivemw.ui.screens.RegisterScreen
-import com.example.safedrivemw.ui.screens.SplashScreen
+import com.example.safedrivemw.ui.screens.*
 import com.example.safedrivemw.ui.theme.SafedrivemwTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,7 +30,7 @@ class MainActivity : ComponentActivity() {
                                 // Handle login logic
                             },
                             onLoggedIn = {
-                                currentScreen = "dashboard"
+                                currentScreen = "type_selection"
                             },
                             onNavigateToRegister = {
                                 currentScreen = "register"
@@ -46,11 +43,51 @@ class MainActivity : ComponentActivity() {
                                 // Handle registration logic
                             },
                             onRegistered = {
-                                currentScreen = "dashboard"
+                                currentScreen = "type_selection"
                             },
                             onNavigateToLogin = {
                                 currentScreen = "login"
                             }
+                        )
+                    }
+                    "type_selection" -> {
+                        ApplicantTypeScreen(
+                            onTypeSelected = { type ->
+                                when (type) {
+                                    ApplicantType.NEW_APPLICANT -> currentScreen = "dashboard"
+                                    ApplicantType.RENEW_LICENCE -> currentScreen = "dashboard"
+                                }
+                            }
+                        )
+                    }
+                    "payment" -> {
+                        PaymentScreen(
+                            amountMwk = "MWK 20,000",
+                            applicationType = "New Driving Licence Application Fee",
+                            onBack = { currentScreen = "dashboard" },
+                            onPaymentSuccess = { _ ->
+                                currentScreen = "payment_history"
+                            }
+                        )
+                    }
+                    "payment_history" -> {
+                        PaymentHistoryScreen(
+                            onBack = { currentScreen = "dashboard" }
+                        )
+                    }
+                    "school_comparison" -> {
+                        SchoolComparisonScreen(
+                            onBack = { currentScreen = "dashboard" },
+                            onRequestSchool = { _ ->
+                                currentScreen = "dashboard"
+                            }
+                        )
+                    }
+                    "profile" -> {
+                        ProfileScreen(
+                            onBack = { currentScreen = "dashboard" },
+                            onNavigateToPaymentHistory = { currentScreen = "payment_history" },
+                            onLogout = { currentScreen = "login" }
                         )
                     }
                     else -> {

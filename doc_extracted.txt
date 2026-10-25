@@ -1,0 +1,227 @@
+                                                
+SafeDrive.mw
+                        
+Mobile Application System Documentation
+Introduction
+SafeDrive.mw is
+ a proposed mobile application designed to simplify the driving licence application and renewal process in Malawi. The system is 
+intended to support both first-time applicants and existing drivers while reducing unnecessary visits to Road Traffic Directorate (RTD) offices, delays and uncertainty about application progress.
+ 
+Purpose of the System
+The main purpose of SafeDrive.mw is
+ to provide a convenient digital platform through which users can apply for a driving licence, renew an existing licence, submit required documents, track application progress and receive important notifications.
+For new applicants, the system also provide
+s access to registered driving schools. Applicants who do not already have a driving school can view schools, compare their prices and locations, and submit a request to a preferred school.
+ Objectives
+Simplify the driving licen
+s
+e application and renewal
+ process.
+Reduce unnecessary physical visits to RTD offices.
+Allow applicants to submit and correct documents electronically.
+Provide applicants with real-time or timely application-status updates.
+Notify users when action is required or when their applica
+tion status changes.
+Help first-time applicants find and compare registered driving schools.
+Provide RTD officers with a central platform for reviewing and managing applications.
+Improve the overall transparency, convenience and efficiency of the process.
+Target Users / System Actors
+New Applicant: 
+A person applying for a driving licen
+s
+e for the first time.
+Existing Driver: 
+A driver who already has a licen
+s
+e and wants to renew it.
+RTD Officer: 
+An authorised officer who reviews and processes licen
+s
+e appli
+cations.
+Driving School: 
+A registered driving school that provides training information, prices and receives applicant requests.
+System Administrator: 
+An authorised user responsible for managing system users, configurations and registered service providers
+.
+ Main System Components
+Driver Mobile Application: 
+The interface used by new applicants and existing drivers to register, apply, upload documents, track applications and receive notifications.
+RTD Officer Portal: 
+A web-based interface through which aut
+horised officers review applications, verify documents, request additional information and update application statuses.
+Driving School Module: 
+A section for displaying registered driving schools, their prices, locations, licen
+s
+e categories and contact deta
+ils, and for receiving applicant requests.
+Central Database: 
+Stores user accounts, application information, documents, driving-school information and application-status records.
+Notification Service: 
+Sends important notifications to applicants and relevant
+ service providers when an action or status change occurs.
+New Applicant Workflow
+User opens SafeDrive.mw and selects 'New Applicant'.
+User creates an account and logs in.
+User selects the type/category of driving licence they want to apply for
+.
+The system displays the relevant requirements and required documents.
+The user is asked whether they already have a driving school.
+If the user does not have one, they can view registered driving schools and compare prices, locations and availab
+le licence categories.
+The user selects a preferred driving school and submits a request/application to the school.
+The applicant completes the driving licence application and uploads required documents.
+The system checks the application for missi
+ng or incomplete information.
+If something is missing, the applicant receives a notification and can correct and resubmit the information.
+When complete, the application is sent to the RTD officer portal for review.
+The applicant tracks the app
+lication through the available status stages.
+After approval, the applicant receives a notification and can access available digital confirmation/licen
+s
+e information and collect the physical licen
+s
+e where required.
+ E
+xisting Driver Renewal Workflow
+Existing driver logs into the application.
+Driver selects 'Renew 
+License
+'.
+Driver completes the renewal form.
+Driver uploads the required documents.
+The system checks the application for missing or incomplete information.
+The driver is no
+tified if corrections or additional documents are required.
+The completed application is submitted to the RTD officer portal.
+An RTD officer reviews and processes the application.
+The driver receives notifications whenever the application status c
+hanges.
+Once approved, the driver receives the available digital confirmation/licen
+s
+e information and instructions for collecting the physical licen
+s
+e where required.
+ Application Status Flow
+The application can move through the following stages:
+Sub
+mitted → Document Verification → Under Review → Approved → Licen
+s
+e Issued
+If information is incomplete, the application can be returned to the applicant for correction before the review process continues.
+ Functional Requirements
+Functional requirements 
+describe what the system must be able to do.
+User Registration and Login: 
+The system shall allow new users to create accounts and existing users to securely log in.
+ Applicant Type Selection: 
+The system shall allow users to select New Applicant 
+or Existing Driver/Renewal.
+ Licen
+s
+e Application: 
+The system shall allow new applicants to select a licen
+s
+e category and submit an application.
+Requirements Display: 
+The system shall display the documents and requirements applicable to the selec
+ted 
+license
+ category.
+ Driving School Search: 
+The system shall allow new applicants to view registered driving schools.
+Driving School Comparison: 
+The system shall allow applicants to compare school information such as price, location and availa
+ble 
+license
+ categories.
+ Driving School Request: 
+The system shall allow an applicant to select a driving school and submit a request/application to it.
+Driving School Information Management: 
+The system shall allow authorised driving schools to p
+rovide and update their prices, locations, categories and contact details.
+ Licen
+s
+e Renewal: 
+The system shall allow existing drivers to complete and submit renewal applications.
+ Document Upload: 
+The system shall allow applicants to upload requi
+red documents.
+ Document/Information Checking: 
+The system shall identify missing or incomplete required information and notify the applicant.
+ Application Tracking: 
+The system shall allow applicants to view their current application status.
+ RTD Application Management: 
+The system shall allow authorised RTD officers to view, review and process applications.
+ Additional Information Requests: 
+The system shall allow RTD officers to request additional information or documents.
+ Noti
+fications: 
+The system shall notify users when an application is submitted, requires action, changes status or is approved/rejected.
+Digital Confirmation: 
+The system shall allow approved users to access available digital confirmation or licen
+s
+e infor
+mation.
+ 
+Non-Functional Requirements
+Non-functional requirements describe how well the system should operate.
+Security: 
+The system shall protect personal information, uploaded documents and account credentials from 
+unauthorized
+ access.
+ Usa
+bility: 
+The application should be simple, clear and easy to navigate for users with different levels of digital literacy.
+Performance: 
+The application should respond promptly to common actions such as login, navigation, document upload and status ch
+ecking.
+ Reliability: 
+The system should operate consistently and minimise failures or loss of submitted information.
+Scalability: 
+The system should support growth in applicants, RTD officers, driving schools, applications and stored documents.
+ Compatibility: 
+The mobile application should support the intended range of mobile devices and screen sizes.
+ Maintainability: 
+The system should be structured so that developers can fix defects, update requirements and add features without 
+redesigning the entire system.
+Availability: 
+The service should be available to users whenever required, apart from planned maintenance or service/network outages.
+Data Integrity: 
+The system should maintain accurate application records and 
+prevent accidental alteration or loss of data.
+ Driving School Feature
+The driving-school feature is primarily available to new applicants. It is designed to help users who have not yet selected a driving school. The system should display registered sch
+ools and allow applicants to compare relevant information.
+School name and contact details
+Location
+Licen
+s
+e categories offered
+Training price/fees
+Available courses or packages
+Applicant request/application option
+The driving-school feature should not be m
+andatory. A new applicant who already has a driving school can select 'I already have a driving school' and continue with the li
+c
+en
+s
+e application.
+ 
+Benefits of the System
+Reduces unnecessary visits to RTD offices.
+Reduces delays caused by missing documents.
+Allows applicants to track applications conveniently.
+Provides timely notifications about application progress.
+Makes the first
+-time application process easier by helping users find driving schools.
+Allows applicants to compare driving-school prices and locations before selecting a school.
+Provides RTD officers with a centralised application-management platform.
+Improves transpare
+ncy and communication between applicants and service providers.
+ Conclusion
+SafeDrive.mw provides a centralised digital approach to driving licen
+s
+e applications and renewals. The system supports both new applicants and existing drivers while connecting 
+applicants, RTD officers and registered driving schools. By combining document submission, application tracking, notifications and driving-school information in one platform, the proposed system aims to make the process more convenient, transparent and eff
+icient.
