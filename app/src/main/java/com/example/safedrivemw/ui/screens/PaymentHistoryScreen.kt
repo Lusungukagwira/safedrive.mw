@@ -38,7 +38,7 @@ fun PaymentHistoryScreen(
         containerColor = Color(0xFFF8FAFC),
         topBar = {
             Surface(
-                color = Color(0xFF1A3A6B),
+                color = Color(0xFF163B70),
                 shadowElevation = 4.dp
             ) {
                 Row(
@@ -87,11 +87,11 @@ fun PaymentHistoryScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(Icons.AutoMirrored.Filled.ReceiptLong, contentDescription = null, tint = Color(0xFF1A3A6B))
+                                Icon(Icons.AutoMirrored.Filled.ReceiptLong, contentDescription = null, tint = Color(0xFF163B70))
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(receipt.txRef, color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                             }
-                            Text(receipt.amountMwk, color = Color(0xFF1A3A6B), fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                            Text(receipt.amountMwk, color = Color(0xFF163B70), fontWeight = FontWeight.Bold, fontSize = 14.sp)
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         Text("Purpose: ${receipt.purpose}", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)

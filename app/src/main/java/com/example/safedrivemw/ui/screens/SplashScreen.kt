@@ -29,9 +29,9 @@ fun SplashScreen(
     var startAnimation by remember { mutableStateOf(false) }
 
     val scaleAnimate by animateFloatAsState(
-        targetValue = if (startAnimation) 1.0f else 0.5f,
+        targetValue = if (startAnimation) 1.0f else 0.6f,
         animationSpec = tween(
-            durationMillis = 1000,
+            durationMillis = 600,
             easing = FastOutSlowInEasing
         ),
         label = "SplashScale"
@@ -40,21 +40,21 @@ fun SplashScreen(
     val alphaAnimate by animateFloatAsState(
         targetValue = if (startAnimation) 1.0f else 0.0f,
         animationSpec = tween(
-            durationMillis = 1000
+            durationMillis = 600
         ),
         label = "SplashAlpha"
     )
 
     LaunchedEffect(Unit) {
         startAnimation = true
-        delay(2500) // 2.5 seconds splash screen display time
+        delay(1200) // Fast & smooth 1.2s launch delay
         onTimeout()
     }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF1A3A6B)),
+            .background(Color(0xFF163B70)),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -68,7 +68,7 @@ fun SplashScreen(
         ) {
             Box(
                 modifier = Modifier
-                    .size(140.dp)
+                    .size(130.dp)
                     .background(Color.White, CircleShape)
                     .padding(8.dp),
                 contentAlignment = Alignment.Center
@@ -76,11 +76,11 @@ fun SplashScreen(
                 Image(
                     painter = painterResource(id = R.drawable.ic_malawi_road_traffic_logo),
                     contentDescription = "Malawi Road Traffic Logo",
-                    modifier = Modifier.size(120.dp)
+                    modifier = Modifier.size(110.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(28.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Text(
                 text = "SafeDrive.mw",
@@ -94,9 +94,9 @@ fun SplashScreen(
 
             Text(
                 text = "Directorate of Road Traffic & Safety Services",
-                color = Color.White.copy(alpha = 0.9f),
+                color = Color.White,
                 fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
 
@@ -104,15 +104,16 @@ fun SplashScreen(
 
             Text(
                 text = "Your Licence Journey, Simplified",
-                color = Color.White.copy(alpha = 0.7f),
+                color = Color.White,
                 fontSize = 13.sp,
+                fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(36.dp))
 
             CircularProgressIndicator(
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(28.dp),
                 color = Color.White,
                 strokeWidth = 3.dp
             )
@@ -121,14 +122,14 @@ fun SplashScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 32.dp),
+                .padding(bottom = 24.dp),
             contentAlignment = Alignment.BottomCenter
         ) {
             Text(
                 text = "Republic of Malawi • DRTSS",
-                color = Color.White.copy(alpha = 0.6f),
+                color = Color.White,
                 fontSize = 12.sp,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Bold
             )
         }
     }

@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- TNM Brand Green Circle Background -->
+    <path
+        android:fillColor="#00A859"
+        android:pathData="M60,0 C93.14,0 120,26.86 120,60 C120,93.14 93.14,120 60,120 C26.86,120 0,93.14 0,60 C0,26.86 26.86,0 60,0 Z" />
+
+    <!-- Red Accent Corner Strip -->
+    <path
+        android:fillColor="#ED1C24"
+        android:pathData="M10,60 C10,32.39 32.39,10 60,10 L60,30 C43.43,30 30,43.43 30,60 Z" />
+
+    <!-- White Inner Phone / Wallet Symbol -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M42,35 L78,35 C82.42,35 86,38.58 86,43 L86,77 C86,81.42 82.42,85 78,85 L42,85 C37.58,85 34,81.42 34,77 L34,43 C34,38.58 37.58,35 42,35 Z M42,42 L78,42 L78,70 L42,70 Z M60,74 C57.24,74 55,76.24 55,79 C55,81.76 57.24,84 60,84 C62.76,84 65,81.76 65,79 C65,76.24 62.76,74 60,74 Z" />
+
+    <!-- Wallet Coin Badge -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M60,48 C54.48,48 50,52.48 50,58 C50,63.52 54.48,68 60,68 C65.52,68 70,63.52 70,58 C70,52.48 65.52,48 60,48 Z" />
+
+</vector>

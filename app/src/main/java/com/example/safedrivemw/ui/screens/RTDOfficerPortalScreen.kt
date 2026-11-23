@@ -35,7 +35,7 @@ fun RTDOfficerPortalScreen(
         containerColor = Color(0xFFEFF6FF),
         topBar = {
             Surface(
-                color = Color(0xFF1A3A6B),
+                color = Color(0xFF163B70),
                 shadowElevation = 4.dp
             ) {
                 Row(
@@ -80,9 +80,9 @@ fun RTDOfficerPortalScreen(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            MetricBox(title = "Pending Review", value = "${applicationsList.count { it.status != "Approved" }}", color = Color(0xFF1A3A6B), bgColor = Color(0xFFE0F2FE))
-                            MetricBox(title = "Approved Today", value = "${applicationsList.count { it.status == "Approved" }}", color = Color(0xFF1A3A6B), bgColor = Color(0xFFDBEAFE))
-                            MetricBox(title = "Total Applications", value = "${applicationsList.size}", color = Color(0xFF1A3A6B), bgColor = Color(0xFFE0E7FF))
+                            MetricBox(title = "Pending Review", value = "${applicationsList.count { it.status != "Approved" }}", color = Color(0xFF163B70), bgColor = Color(0xFFE0F2FE))
+                            MetricBox(title = "Approved Today", value = "${applicationsList.count { it.status == "Approved" }}", color = Color(0xFF163B70), bgColor = Color(0xFFDBEAFE))
+                            MetricBox(title = "Total Applications", value = "${applicationsList.size}", color = Color(0xFF163B70), bgColor = Color(0xFFE0E7FF))
                         }
                     }
                 }
@@ -123,7 +123,7 @@ fun RTDOfficerPortalScreen(
                             ) {
                                 Text(
                                     text = app.status,
-                                    color = Color(0xFF1A3A6B),
+                                    color = Color(0xFF163B70),
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -141,11 +141,15 @@ fun RTDOfficerPortalScreen(
                                 onClick = {
                                     db.updateApplicationStatus(app.id, "Document Verification")
                                     applicationsList = db.getAllApplications()
+                                    try {
+                                        val repo = com.example.safedrivemw.data.FirebaseRepository()
+                                        repo.updateApplicationStatus(context, app.id, app.status, "Document Verification", "Verified by RTD Officer")
+                                    } catch (_: Throwable) {}
                                 },
                                 shape = RoundedCornerShape(8.dp),
-                                border = BorderStroke(1.dp, Color(0xFF1A3A6B))
+                                border = BorderStroke(1.dp, Color(0xFF163B70))
                             ) {
-                                Text("Verify Docs", color = Color(0xFF1A3A6B), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                Text("Verify Docs", color = Color(0xFF163B70), fontSize = 12.sp, fontWeight = FontWeight.Bold)
                             }
                             Spacer(modifier = Modifier.width(8.dp))
                             Button(
@@ -153,7 +157,7 @@ fun RTDOfficerPortalScreen(
                                     selectedAppForReview = app
                                     isCorrectionDialogVisible = true
                                 },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B)),
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF163B70)),
                                 shape = RoundedCornerShape(8.dp)
                             ) {
                                 Text("Request Info", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
@@ -163,8 +167,12 @@ fun RTDOfficerPortalScreen(
                                 onClick = {
                                     db.updateApplicationStatus(app.id, "Approved")
                                     applicationsList = db.getAllApplications()
+                                    try {
+                                        val repo = com.example.safedrivemw.data.FirebaseRepository()
+                                        repo.updateApplicationStatus(context, app.id, app.status, "Approved", "Approved by RTD Officer Kondwani Phiri")
+                                    } catch (_: Throwable) {}
                                 },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B)),
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF163B70)),
                                 shape = RoundedCornerShape(8.dp)
                             ) {
                                 Text("Approve ✓", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
@@ -201,14 +209,14 @@ fun RTDOfficerPortalScreen(
                         isCorrectionDialogVisible = false
                         correctionText = ""
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF163B70))
                 ) {
                     Text("Send Request", color = Color.White)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { isCorrectionDialogVisible = false }) {
-                    Text("Cancel", color = Color(0xFF1A3A6B))
+                    Text("Cancel", color = Color(0xFF163B70))
                 }
             }
         )

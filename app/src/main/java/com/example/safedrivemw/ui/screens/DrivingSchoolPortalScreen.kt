@@ -33,7 +33,7 @@ fun DrivingSchoolPortalScreen(
         containerColor = Color(0xFFF8FAFC),
         topBar = {
             Surface(
-                color = Color(0xFF1A3A6B),
+                color = Color(0xFF163B70),
                 shadowElevation = 4.dp
             ) {
                 Row(
@@ -100,7 +100,7 @@ fun DrivingSchoolPortalScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                         Text("Categories: ${school.categoriesOffered}", color = Color.Black, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
                         Text("Contact: ${school.phone}", color = Color.Black, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
-                        Text("Training Fee: ${school.priceMwk}", color = Color(0xFF1A3A6B), fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        Text("Training Fee: ${school.priceMwk}", color = Color(0xFF163B70), fontWeight = FontWeight.Bold, fontSize = 14.sp)
 
                         Spacer(modifier = Modifier.height(12.dp))
 
@@ -110,10 +110,10 @@ fun DrivingSchoolPortalScreen(
                         ) {
                             Button(
                                 onClick = { isEditingPrice = true },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B)),
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF163B70)),
                                 shape = RoundedCornerShape(8.dp)
                             ) {
-                                Text("Update MWK Fees", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                 Text("Update MWK Fees", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                             }
                         }
                     }
@@ -139,7 +139,7 @@ fun DrivingSchoolPortalScreen(
                     onClick = {
                         isEditingPrice = false
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF163B70))
                 ) {
                     Text("Save Changes", color = Color.White)
                 }

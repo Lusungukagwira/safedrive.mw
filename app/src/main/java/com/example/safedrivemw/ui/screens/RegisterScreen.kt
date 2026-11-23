@@ -1,7 +1,6 @@
 package com.example.safedrivemw.ui.screens
 
 import android.app.DatePickerDialog
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,30 +24,26 @@ import androidx.compose.ui.unit.sp
 import com.example.safedrivemw.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Calendar
+import java.util.*
 
-fun calculateAge(dobString: String): Int? {
-    val parts = dobString.split("/", "-", ".").mapNotNull { it.trim().toIntOrNull() }
-    if (parts.size != 3) return null
+fun calculateAge(dob: String): Int? {
+    if (dob.isBlank() || dob.length < 10) return null
+    return try {
+        val parts = dob.split("/")
+        val day = parts[0].toInt()
+        val month = parts[1].toInt() - 1
+        val year = parts[2].toInt()
 
-    val (day, month, year) = if (parts[0] > 1000) {
-        Triple(parts[2], parts[1], parts[0])
-    } else {
-        Triple(parts[0], parts[1], parts[2])
+        val calendar = Calendar.getInstance()
+        val dobCalendar = Calendar.getInstance().apply { set(year, month, day) }
+        var diffYears = calendar.get(Calendar.YEAR) - dobCalendar.get(Calendar.YEAR)
+        if (calendar.get(Calendar.DAY_OF_YEAR) < dobCalendar.get(Calendar.DAY_OF_YEAR)) {
+            diffYears--
+        }
+        diffYears
+    } catch (_: Exception) {
+        null
     }
-
-    if (month !in 1..12 || day !in 1..31 || year < 1900) return null
-
-    val today = Calendar.getInstance()
-    val currentYear = today.get(Calendar.YEAR)
-    val currentMonth = today.get(Calendar.MONTH) + 1
-    val currentDay = today.get(Calendar.DAY_OF_MONTH)
-
-    var age = currentYear - year
-    if (currentMonth < month || (currentMonth == month && currentDay < day)) {
-        age--
-    }
-    return if (age in 0..120) age else null
 }
 
 @Composable
@@ -63,13 +58,26 @@ fun RegisterScreen(
     var dob by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
-    var showDatePicker by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
 
     var registrationError by remember { mutableStateOf("") }
     var registrationSuccessMsg by remember { mutableStateOf("") }
+
+    var showDatePicker by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+
+    // Calculate age eligibility
+    val age = remember(dob) {
+        calculateAge(dob)
+    }
+
+    val isEligible = age != null && age >= 18
+    val isDobProvided = dob.isNotBlank()
 
     val blackTextFieldColors = OutlinedTextFieldDefaults.colors(
         focusedTextColor = Color.Black,
@@ -84,19 +92,12 @@ fun RegisterScreen(
         unfocusedPlaceholderColor = Color.Black
     )
 
-    val age = calculateAge(dob)
-    val isEligible = age != null && age >= 18
-    val isDobProvided = dob.isNotBlank()
-
-    val context = LocalContext.current
-
     if (showDatePicker) {
-        val calendar = Calendar.getInstance()
         val datePickerDialog = DatePickerDialog(
             context,
             { _, year, month, dayOfMonth ->
-                val formattedDay = String.format(java.util.Locale.getDefault(), "%02d", dayOfMonth)
-                val formattedMonth = String.format(java.util.Locale.getDefault(), "%02d", month + 1)
+                val formattedDay = dayOfMonth.toString().padStart(2, '0')
+                val formattedMonth = (month + 1).toString().padStart(2, '0')
                 dob = "$formattedDay/$formattedMonth/$year"
                 showDatePicker = false
             },
@@ -122,28 +123,36 @@ fun RegisterScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
+                .imePadding()
+                .navigationBarsPadding()
                 .padding(20.dp),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(14.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1A3A6B))
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF163B70))
                 ) {
                     Row(
                         modifier = Modifier.padding(20.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_malawi_road_traffic_logo),
-                            contentDescription = "Malawi Road Traffic Logo",
-                            modifier = Modifier
-                                .size(56.dp)
-                                .background(Color.White, CircleShape)
-                                .padding(2.dp)
-                        )
+                        Surface(
+                            shape = CircleShape,
+                            color = Color.White.copy(alpha = 0.2f),
+                            modifier = Modifier.size(52.dp)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Icon(
+                                    imageVector = Icons.Default.DirectionsCar,
+                                    contentDescription = "Car Logo",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(28.dp)
+                                )
+                            }
+                        }
                         Spacer(modifier = Modifier.width(16.dp))
                         Column {
                             Text("SafeDrive.mw", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
@@ -152,15 +161,14 @@ fun RegisterScreen(
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(24.dp))
             }
 
             item {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text("Create an account", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                    Text("Register to start your licence application journey", style = MaterialTheme.typography.bodyMedium, color = Color.Black)
+                    Text("Create an account", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = Color(0xFF0F172A))
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text("Register to start your licence application journey", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF64748B))
                 }
-                Spacer(modifier = Modifier.height(20.dp))
             }
 
             item {
@@ -174,7 +182,6 @@ fun RegisterScreen(
                     TabButton(title = "Sign In", selected = false, modifier = Modifier.weight(1f)) { onNavigateToLogin() }
                     TabButton(title = "Register", selected = true, modifier = Modifier.weight(1f)) { }
                 }
-                Spacer(modifier = Modifier.height(20.dp))
             }
 
             item {
@@ -182,13 +189,12 @@ fun RegisterScreen(
                     value = fullName,
                     onValueChange = { fullName = it },
                     label = { Text("Full Name") },
-                    leadingIcon = { Icon(Icons.Default.Person, contentDescription = null, tint = Color.Black) },
+                    leadingIcon = { Icon(Icons.Default.Person, contentDescription = null, tint = Color(0xFF64748B)) },
                     colors = blackTextFieldColors,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true
                 )
-                Spacer(modifier = Modifier.height(16.dp))
             }
 
             item {
@@ -196,13 +202,12 @@ fun RegisterScreen(
                     value = email,
                     onValueChange = { email = it },
                     label = { Text("Email address") },
-                    leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = Color.Black) },
+                    leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = Color(0xFF64748B)) },
                     colors = blackTextFieldColors,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true
                 )
-                Spacer(modifier = Modifier.height(16.dp))
             }
 
             item {
@@ -210,13 +215,12 @@ fun RegisterScreen(
                     value = phone,
                     onValueChange = { phone = it },
                     label = { Text("Phone Number") },
-                    leadingIcon = { Icon(Icons.Default.Phone, contentDescription = null, tint = Color.Black) },
+                    leadingIcon = { Icon(Icons.Default.Phone, contentDescription = null, tint = Color(0xFF64748B)) },
                     colors = blackTextFieldColors,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true
                 )
-                Spacer(modifier = Modifier.height(16.dp))
             }
 
             item {
@@ -225,10 +229,10 @@ fun RegisterScreen(
                     onValueChange = { dob = it },
                     label = { Text("Date of Birth (DD/MM/YYYY)") },
                     placeholder = { Text("e.g. 15/08/2005") },
-                    leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null, tint = Color.Black) },
+                    leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null, tint = Color(0xFF64748B)) },
                     trailingIcon = {
                         IconButton(onClick = { showDatePicker = true }) {
-                            Icon(Icons.Default.CalendarToday, contentDescription = "Select Date", tint = Color.Black)
+                            Icon(Icons.Default.CalendarToday, contentDescription = "Select Date", tint = Color(0xFF64748B))
                         }
                     },
                     colors = blackTextFieldColors,
@@ -236,7 +240,6 @@ fun RegisterScreen(
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true
                 )
-                Spacer(modifier = Modifier.height(8.dp))
             }
 
             // Eligibility Card Feedback
@@ -306,11 +309,6 @@ fun RegisterScreen(
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
-            } else {
-                item {
-                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
 
@@ -319,13 +317,13 @@ fun RegisterScreen(
                     value = password,
                     onValueChange = { password = it },
                     label = { Text("Password") },
-                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color.Black) },
+                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color(0xFF64748B)) },
                     trailingIcon = {
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
                                 imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                                 contentDescription = null,
-                                tint = Color.Black
+                                tint = Color(0xFF64748B)
                             )
                         }
                     },
@@ -335,7 +333,6 @@ fun RegisterScreen(
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true
                 )
-                Spacer(modifier = Modifier.height(16.dp))
             }
 
             item {
@@ -343,13 +340,13 @@ fun RegisterScreen(
                     value = confirmPassword,
                     onValueChange = { confirmPassword = it },
                     label = { Text("Confirm Password") },
-                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color.Black) },
+                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color(0xFF64748B)) },
                     trailingIcon = {
                         IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
                             Icon(
                                 imageVector = if (confirmPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                                 contentDescription = null,
-                                tint = Color.Black
+                                tint = Color(0xFF64748B)
                             )
                         }
                     },
@@ -359,20 +356,17 @@ fun RegisterScreen(
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true
                 )
-                Spacer(modifier = Modifier.height(16.dp))
             }
 
             if (registrationError.isNotBlank()) {
                 item {
                     Text(registrationError, color = Color(0xFFDC2626), fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.height(12.dp))
                 }
             }
 
             if (registrationSuccessMsg.isNotBlank()) {
                 item {
                     Text(registrationSuccessMsg, color = Color(0xFF1D4ED8), fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.height(12.dp))
                 }
             }
 
@@ -405,35 +399,30 @@ fun RegisterScreen(
 
                                 try {
                                     val auth = FirebaseAuth.getInstance()
-                                    val firestore = FirebaseFirestore.getInstance()
+                                    val repo = com.example.safedrivemw.data.FirebaseRepository()
 
                                     auth.createUserWithEmailAndPassword(email, password)
                                         .addOnSuccessListener { authResult ->
                                             isLoading = false
-                                            val uid = authResult.user?.uid ?: ""
-                                            val userMap = hashMapOf(
-                                                "uid" to uid,
-                                                "fullName" to fullName,
-                                                "email" to email,
-                                                "phone" to phone,
-                                                "dob" to dob,
-                                                "role" to "CANDIDATE",
-                                                "createdAt" to System.currentTimeMillis()
+                                            val uid = authResult.user?.uid ?: java.util.UUID.randomUUID().toString()
+                                            val parts = fullName.trim().split(" ")
+                                            val firstName = parts.firstOrNull() ?: ""
+                                            val lastName = if (parts.size > 1) parts.drop(1).joinToString(" ") else ""
+
+                                            val profile = com.example.safedrivemw.data.UserProfile(
+                                                uid = uid,
+                                                firstName = firstName,
+                                                lastName = lastName,
+                                                fullName = fullName,
+                                                email = email,
+                                                phone = phone,
+                                                role = "CANDIDATE",
+                                                accountStatus = "ACTIVE",
+                                                createdAt = System.currentTimeMillis()
                                             )
 
-                                            if (uid.isNotBlank()) {
-                                                firestore.collection("users").document(uid).set(userMap)
-                                                    .addOnSuccessListener {
-                                                        registrationSuccessMsg = "Account created & saved in Firebase Database!"
-                                                        onRegister(fullName, email, phone, password, dob)
-                                                        onRegistered()
-                                                    }
-                                                    .addOnFailureListener {
-                                                        registrationSuccessMsg = "Firebase Auth created. Profile saved!"
-                                                        onRegister(fullName, email, phone, password, dob)
-                                                        onRegistered()
-                                                    }
-                                            } else {
+                                            repo.saveUserProfile(context, profile) {
+                                                registrationSuccessMsg = "Account created successfully!"
                                                 onRegister(fullName, email, phone, password, dob)
                                                 onRegistered()
                                             }
@@ -456,7 +445,7 @@ fun RegisterScreen(
                         .fillMaxWidth()
                         .height(52.dp),
                     shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF163B70))
                 ) {
                     if (isLoading) {
                         CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
@@ -464,13 +453,12 @@ fun RegisterScreen(
                         Text("Register", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
                     }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
             }
 
             item {
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                     TextButton(onClick = onNavigateToLogin) {
-                        Text("Already have an account? Sign In", color = Color(0xFF1A3A6B), fontWeight = FontWeight.SemiBold)
+                        Text("Already have an account? Sign In", color = Color(0xFF163B70), fontWeight = FontWeight.SemiBold)
                     }
                 }
             }

@@ -32,7 +32,7 @@ fun NotificationsSheet(
         containerColor = Color(0xFFF8FAFC),
         topBar = {
             Surface(
-                color = Color(0xFF1A3A6B),
+                color = Color(0xFF163B70),
                 shadowElevation = 4.dp
             ) {
                 Row(
@@ -75,14 +75,14 @@ fun NotificationsSheet(
                     ) {
                         Surface(
                             shape = CircleShape,
-                            color = if (notif.actionRequired) Color(0xFFDC2626).copy(alpha = 0.15f) else Color(0xFF1A3A6B).copy(alpha = 0.15f),
+                            color = if (notif.actionRequired) Color(0xFFDC2626).copy(alpha = 0.15f) else Color(0xFF163B70).copy(alpha = 0.15f),
                             modifier = Modifier.size(36.dp)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Icon(
                                     Icons.Default.Notifications,
                                     contentDescription = null,
-                                    tint = if (notif.actionRequired) Color(0xFFDC2626) else Color(0xFF1A3A6B),
+                                    tint = if (notif.actionRequired) Color(0xFFDC2626) else Color(0xFF163B70),
                                     modifier = Modifier.size(20.dp)
                                 )
                             }

@@ -36,7 +36,7 @@ fun SchoolComparisonScreen(
         containerColor = Color(0xFFF8FAFC),
         topBar = {
             Surface(
-                color = Color(0xFF1A3A6B),
+                color = Color(0xFF163B70),
                 shadowElevation = 4.dp
             ) {
                 Row(
@@ -112,7 +112,7 @@ fun SchoolComparisonScreen(
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B)),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF163B70)),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Icon(Icons.Default.Compare, contentDescription = null, tint = Color.White)
@@ -145,7 +145,7 @@ fun SchoolComparisonScreen(
                                     Text(school.name, color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                                     Spacer(modifier = Modifier.height(6.dp))
                                     Text("FEE:", color = Color.Black, fontSize = 10.sp, fontWeight = FontWeight.Bold)
-                                    Text(school.priceMwk, color = Color(0xFF1A3A6B), fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                                    Text(school.priceMwk, color = Color(0xFF163B70), fontWeight = FontWeight.Bold, fontSize = 13.sp)
                                     Spacer(modifier = Modifier.height(6.dp))
                                     Text("LOCATION:", color = Color.Black, fontSize = 10.sp, fontWeight = FontWeight.Bold)
                                     Text(school.location, color = Color.Black, fontWeight = FontWeight.SemiBold, fontSize = 11.sp)
@@ -159,7 +159,7 @@ fun SchoolComparisonScreen(
 
                                     Button(
                                         onClick = { onRequestSchool(school) },
-                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B)),
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF163B70)),
                                         shape = RoundedCornerShape(6.dp),
                                         modifier = Modifier.fillMaxWidth()
                                     ) {

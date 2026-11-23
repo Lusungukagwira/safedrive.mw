@@ -56,8 +56,9 @@ class SafeDriveDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         private var INSTANCE: SafeDriveDatabase? = null
 
         fun getInstance(context: Context): SafeDriveDatabase {
+            val appContext = runCatching { context.applicationContext }.getOrNull() ?: context
             return INSTANCE ?: synchronized(this) {
-                val instance = SafeDriveDatabase(context.applicationContext)
+                val instance = SafeDriveDatabase(appContext)
                 INSTANCE = instance
                 instance
             }
@@ -177,7 +178,7 @@ class SafeDriveDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             }
             cursor.close()
             list
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             getSampleApplications()
         }
     }
@@ -204,7 +205,7 @@ class SafeDriveDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             }
             cursor.close()
             list
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             getSampleDrivingSchools()
         }
     }
@@ -231,7 +232,7 @@ class SafeDriveDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             }
             cursor.close()
             list
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             getSampleNotifications()
         }
     }
@@ -241,7 +242,50 @@ class SafeDriveDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             val db = writableDatabase
             val sql = "UPDATE applications SET status = ?, correctionNotes = ? WHERE id = ?"
             db.execSQL(sql, arrayOf(newStatus, notes, appId))
-        } catch (ignored: Exception) {}
+        } catch (ignored: Throwable) {}
+    }
+
+    fun addApplication(app: LicenceApplicationRecord) {
+        try {
+            val db = writableDatabase
+            db.execSQL(
+                "INSERT OR REPLACE INTO applications (id, userId, applicantName, applicantType, category, schoolName, status, submittedDate, correctionNotes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                arrayOf(app.id, app.userId, app.applicantName, app.applicantType, app.category, app.schoolName, app.status, app.submittedDate, app.correctionNotes)
+            )
+        } catch (ignored: Throwable) {}
+    }
+
+    fun getUserByEmail(email: String): UserRecord {
+        return try {
+            var user: UserRecord? = null
+            val db = readableDatabase
+            val cursor = db.rawQuery("SELECT * FROM users WHERE email = ?", arrayOf(email))
+            if (cursor.moveToFirst()) {
+                user = UserRecord(
+                    id = cursor.getString(0),
+                    fullName = cursor.getString(1),
+                    email = cursor.getString(2),
+                    phone = cursor.getString(3),
+                    role = cursor.getString(4),
+                    dob = cursor.getString(5),
+                    nationalId = if (cursor.columnCount > 6) cursor.getString(6) ?: "NRB-987654321-MW" else "NRB-987654321-MW"
+                )
+            }
+            cursor.close()
+            user ?: UserRecord("usr_1", "Lusungu Kagwira", email.ifBlank { "lusungu.kagwira@safedrive.mw" }, "+265 999 123 456", "Driver", "15/08/2002", "NRB-987654321-MW")
+        } catch (e: Throwable) {
+            UserRecord("usr_1", "Lusungu Kagwira", email.ifBlank { "lusungu.kagwira@safedrive.mw" }, "+265 999 123 456", "Driver", "15/08/2002", "NRB-987654321-MW")
+        }
+    }
+
+    fun saveUser(user: UserRecord) {
+        try {
+            val db = writableDatabase
+            db.execSQL(
+                "INSERT OR REPLACE INTO users (id, fullName, email, phone, role, dob, nationalId) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                arrayOf(user.id, user.fullName, user.email, user.phone, user.role, user.dob, user.nationalId)
+            )
+        } catch (ignored: Throwable) {}
     }
 
     private fun getSampleApplications() = listOf(

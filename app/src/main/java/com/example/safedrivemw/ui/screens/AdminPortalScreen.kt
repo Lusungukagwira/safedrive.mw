@@ -23,7 +23,7 @@ fun AdminPortalScreen(
         containerColor = Color(0xFFF8FAFC),
         topBar = {
             Surface(
-                color = Color(0xFF1A3A6B),
+                color = Color(0xFF163B70),
                 shadowElevation = 4.dp
             ) {
                 Row(
@@ -86,7 +86,7 @@ fun AdminActionCard(title: String, description: String) {
             Spacer(modifier = Modifier.height(10.dp))
             Button(
                 onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF163B70)),
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Text("Manage", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)

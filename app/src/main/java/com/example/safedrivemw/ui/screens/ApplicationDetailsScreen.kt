@@ -40,7 +40,7 @@ fun ApplicationDetailsScreen(
         containerColor = Color(0xFFF8FAFC),
         topBar = {
             Surface(
-                color = Color(0xFF1A3A6B),
+                color = Color(0xFF163B70),
                 shadowElevation = 4.dp
             ) {
                 Row(
@@ -71,7 +71,7 @@ fun ApplicationDetailsScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1A3A6B))
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF163B70))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("APPLICANT NAME", color = Color.White, fontSize = 11.sp, fontWeight = FontWeight.Bold)
@@ -116,7 +116,7 @@ fun ApplicationDetailsScreen(
                                         .size(32.dp)
                                         .background(
                                             when {
-                                                isCurrent || isCompleted -> Color(0xFF1A3A6B)
+                                                isCurrent || isCompleted -> Color(0xFF163B70)
                                                 else -> Color(0xFFCBD5E1)
                                             },
                                             CircleShape
@@ -138,7 +138,7 @@ fun ApplicationDetailsScreen(
                                         fontSize = 14.sp
                                     )
                                     if (isCurrent) {
-                                        Text("Current Stage in Progress", color = Color(0xFF1A3A6B), fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                                        Text("Current Stage in Progress", color = Color(0xFF163B70), fontSize = 11.sp, fontWeight = FontWeight.Bold)
                                     }
                                 }
                             }
@@ -149,7 +149,7 @@ fun ApplicationDetailsScreen(
                                         .padding(start = 15.dp, top = 4.dp, bottom = 4.dp)
                                         .width(2.dp)
                                         .height(24.dp)
-                                        .background(if (isCompleted) Color(0xFF1A3A6B) else Color(0xFFCBD5E1))
+                                        .background(if (isCompleted) Color(0xFF163B70) else Color(0xFFCBD5E1))
                                 )
                             }
                         }
@@ -166,7 +166,7 @@ fun ApplicationDetailsScreen(
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFF1A3A6B))
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFF163B70))
                     ) {
                         Column(modifier = Modifier.padding(20.dp)) {
                             Row(
@@ -229,7 +229,7 @@ fun ApplicationDetailsScreen(
                             Spacer(modifier = Modifier.height(12.dp))
                             Button(
                                 onClick = { isCorrectionDialogVisible = true },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B)),
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF163B70)),
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Text("Re-upload Corrected Documents", color = Color.White, fontWeight = FontWeight.Bold)
@@ -249,7 +249,7 @@ fun ApplicationDetailsScreen(
             confirmButton = {
                 Button(
                     onClick = { isCorrectionDialogVisible = false },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A3A6B))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF163B70))
                 ) {
                     Text("Upload & Resubmit", color = Color.White)
                 }
